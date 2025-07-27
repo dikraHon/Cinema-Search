@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -56,4 +57,28 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    //ksp + dagger2
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.dagger)
+    ksp(libs.dagger.compiler)
+
+    // Retrofit и Moshi
+    implementation (libs.retrofit)
+    implementation (libs.converter.moshi)
+    implementation (libs.moshi.kotlin)
+    ksp (libs.moshi.kotlin.codegen)
+
+    // Coroutines
+    implementation (libs.kotlinx.coroutines.android)
+
+    //room
+    implementation("androidx.room:room-runtime:2.7.0")
+    implementation("androidx.room:room-ktx:2.7.0")
+
+    implementation("io.coil-kt:coil-compose:2.7.0")
+    implementation("io.coil-kt:coil-svg:2.7.0")
+
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+
 }
