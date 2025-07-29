@@ -1,4 +1,4 @@
-package com.example.cinemasearch.di
+package com.example.cinemasearch.data.di
 
 import android.content.Context
 import com.example.cinemasearch.data.database.AppDatabase
@@ -16,4 +16,5 @@ class AppModule {
 
     @Provides
     fun providesDatabase(context: Context): AppDatabase = AppDatabase.getDatabase(context)
+
 }

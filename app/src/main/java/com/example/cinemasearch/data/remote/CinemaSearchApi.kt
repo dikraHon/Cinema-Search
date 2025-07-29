@@ -1,5 +1,6 @@
 package com.example.cinemasearch.data.remote
 
+import com.example.cinemasearch.data.repository.MovieResponse
 import com.example.cinemasearch.domain.Films
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -14,7 +15,8 @@ interface CinemaSearchApi {
     suspend fun getFilms(
         @Header("X-API-KEY") apiKey: String,
         @Query("page") page: Int = 1,
-        @Query("limit") limit: Int = 10
+        @Query("limit") limit: Int = 50,
+
     ): MovieResponse
     @GET("v1.4/movie/{id}")
     suspend fun getFilmById(

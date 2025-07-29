@@ -10,14 +10,4 @@ data class Films(
     val description: String?,
     val poster: String?,
     val rating: Double?
-) {
-    // Функция для обработки разных форматов URL
-    fun getFullPosterUrl(): String? {
-        return when {
-            poster.isNullOrBlank() -> null
-            poster!!.startsWith("http") -> poster
-            poster.startsWith("/") -> "https://image.tmdb.org/t/p/w500$poster"
-            else -> "https://$poster" // Если вдруг без http
-        }
-    }
-}
+)

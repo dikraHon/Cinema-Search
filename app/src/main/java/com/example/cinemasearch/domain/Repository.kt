@@ -10,4 +10,6 @@ interface Repository {
 
     suspend fun deleteFilmById(id: Long)
 
+   // suspend fun getFilmsPage(page: Int): List<Films>
+
 }

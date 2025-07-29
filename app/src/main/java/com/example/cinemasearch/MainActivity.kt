@@ -11,18 +11,14 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.lifecycleScope
-import com.example.cinemasearch.di.MyApp
+import com.example.cinemasearch.data.di.MyApp
 import com.example.cinemasearch.presintation.FactoryViewModel
 import com.example.cinemasearch.presintation.SearchFilmsViewModel
 import com.example.cinemasearch.presintation.adapterFilms.FilmsList
@@ -90,7 +86,6 @@ class MainActivity : ComponentActivity() {
                 }
                 state.films.isNotEmpty() -> {
                     FilmsList(
-                        modifier = Modifier.padding(innerPadding),
                         films = state.films,
                         onRetry = { viewModel.loadFilms() }
                     )

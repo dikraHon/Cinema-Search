@@ -1,8 +1,8 @@
-package com.example.cinemasearch.di
+package com.example.cinemasearch.data.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.cinemasearch.data.RepositoryImpl
+import com.example.cinemasearch.data.repository.RepositoryImpl
 import com.example.cinemasearch.domain.Repository
 import com.example.cinemasearch.presintation.FactoryViewModel
 import com.example.cinemasearch.presintation.SearchFilmsViewModel

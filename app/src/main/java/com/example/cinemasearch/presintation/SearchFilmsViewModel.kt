@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cinemasearch.data.RepositoryImpl
+import com.example.cinemasearch.data.repository.RepositoryImpl
 import com.example.cinemasearch.domain.Films
 import com.example.cinemasearch.domain.Repository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import javax.inject.Inject
 
 data class FilmsState(
@@ -48,8 +49,6 @@ class SearchFilmsViewModel @Inject constructor(
             }
         }
     }
-
-
     fun clearError() {
         _state.update { it.copy(error = null) }
     }

@@ -1,0 +1,70 @@
+package com.example.cinemasearch.data.repository
+
+import android.util.Log
+import com.example.cinemasearch.data.database.AppDatabase
+import com.example.cinemasearch.data.di.ApiService
+import com.example.cinemasearch.data.remote.ApiConfig
+import com.example.cinemasearch.data.remote.CinemaSearchApi
+import com.example.cinemasearch.domain.Films
+import com.example.cinemasearch.domain.Repository
+import javax.inject.Inject
+
+class RepositoryImpl @Inject constructor(
+    @ApiService private val apiService: CinemaSearchApi,
+    private val getDao: AppDatabase
+) : Repository {
+    private val apiKey = ApiConfig.API_KEY
+    private val filmDao = getDao.filmsDao()
+
+    override suspend fun addFilmById(id: Long): Films {
+        val filmsItem = Films(id = id, "asd", "asd", "", 1.0)
+        return apiService.addFilm(filmsItem)
+    }
+
+    override suspend fun deleteFilmById(id: Long) {
+        filmDao.deleteFilmById(id)
+    }
+
+    override suspend fun getAllFilms(): List<Films> {
+        return try {
+            val response = apiService.getFilms(apiKey)
+            response.docs.mapNotNull { filmDto ->
+                val posterUrl = filmDto.poster?.url
+                if (posterUrl != null) {
+                    val film = Films(
+                        id = filmDto.id,
+                        name = filmDto.name,
+                        description = filmDto.description,
+                        poster = filmDto.poster.url,
+                        rating = filmDto.rating?.kp
+                    ).also {
+                        Log.d("POSTER_FILTER", "Добавлен фильм с постером: ${it.name}")
+                    }
+                    film
+                } else {
+                    Log.d("POSTER_FILTER", "Пропущен фильм без постера: ${filmDto.name}")
+                    null
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("API_ERROR", "Ошибка: ${e.message}")
+            emptyList()
+        }
+    }
+
+
+
+    // Аналогично обновить другие методы
+
+    override suspend fun getFilmById(id: Long): Films {
+        return try {
+            val response = apiService.getFilmById(apiKey, id)
+            filmDao.insertFilms(response)
+            response
+        } catch (e: Exception) {
+            filmDao.getFilmById(id) ?: throw e
+        }
+    }
+
+
+}

@@ -1,10 +1,4 @@
-package com.example.cinemasearch.data.remote
-
-import com.example.cinemasearch.domain.Films
-
-data class MovieResponse(
-    val docs: List<FilmDTO>
-)
+package com.example.cinemasearch.data.repository
 
 data class FilmDTO(
     val id: Long,

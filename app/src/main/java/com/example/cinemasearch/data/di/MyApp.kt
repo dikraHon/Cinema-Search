@@ -1,4 +1,4 @@
-package com.example.cinemasearch.di
+package com.example.cinemasearch.data.di
 
 import android.app.Application
 
