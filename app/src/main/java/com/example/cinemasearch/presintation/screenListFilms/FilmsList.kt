@@ -10,8 +10,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -21,14 +25,29 @@ import coil.compose.AsyncImage
 import com.example.cinemasearch.R
 import com.example.cinemasearch.domain.Films
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FilmsList(
     films: List<Films>,
-    onRetry: () -> Unit
+    onRetry: () -> Unit,
+    onMenuClick: () -> Unit
 ) {
-    LazyColumn {
-        items(films) { film ->
-            FilmCard(film = film)
+    Column {
+        TopAppBar(
+            title = { Text("Films") },
+            navigationIcon = {
+                IconButton(onClick = onMenuClick) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_menu),
+                        contentDescription = "Menu"
+                    )
+                }
+            }
+        )
+        LazyColumn {
+            items(films) { film ->
+                FilmCard(film = film)
+            }
         }
     }
 }
