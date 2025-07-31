@@ -2,7 +2,7 @@ package com.example.cinemasearch.data.repository
 
 import android.util.Log
 import com.example.cinemasearch.data.database.AppDatabase
-import com.example.cinemasearch.data.di.ApiService
+import com.example.cinemasearch.di.ApiService
 import com.example.cinemasearch.data.remote.ApiConfig
 import com.example.cinemasearch.data.remote.CinemaSearchApi
 import com.example.cinemasearch.domain.Films

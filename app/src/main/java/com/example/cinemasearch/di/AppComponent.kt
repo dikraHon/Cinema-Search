@@ -1,10 +1,10 @@
-package com.example.cinemasearch.data.di
+package com.example.cinemasearch.di
 
 import android.app.Application
 import android.content.Context
-import com.example.cinemasearch.MainActivity
-import com.example.cinemasearch.presintation.FactoryViewModel
-import com.example.cinemasearch.presintation.SearchFilmsViewModel
+import com.example.cinemasearch.presintation.MainActivity
+import com.example.cinemasearch.presintation.viewModelPackage.FactoryViewModel
+import com.example.cinemasearch.presintation.viewModelPackage.SearchFilmsViewModel
 import dagger.BindsInstance
 import dagger.Component
 

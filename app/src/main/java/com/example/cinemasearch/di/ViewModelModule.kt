@@ -1,11 +1,9 @@
-package com.example.cinemasearch.data.di
+package com.example.cinemasearch.di
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.example.cinemasearch.data.repository.RepositoryImpl
 import com.example.cinemasearch.domain.Repository
-import com.example.cinemasearch.presintation.FactoryViewModel
-import com.example.cinemasearch.presintation.SearchFilmsViewModel
+import com.example.cinemasearch.presintation.viewModelPackage.SearchFilmsViewModel
 import dagger.Binds
 import dagger.MapKey
 import dagger.Module

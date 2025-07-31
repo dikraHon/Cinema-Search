@@ -1,4 +1,4 @@
-package com.example.cinemasearch
+package com.example.cinemasearch.presintation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -18,10 +18,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.cinemasearch.data.di.MyApp
-import com.example.cinemasearch.presintation.FactoryViewModel
-import com.example.cinemasearch.presintation.SearchFilmsViewModel
-import com.example.cinemasearch.presintation.adapterFilms.FilmsList
+import com.example.cinemasearch.di.MyApp
+import com.example.cinemasearch.presintation.screenListFilms.FilmsList
+import com.example.cinemasearch.presintation.viewModelPackage.FactoryViewModel
+import com.example.cinemasearch.presintation.viewModelPackage.SearchFilmsViewModel
 import com.example.cinemasearch.ui.theme.CinemaSearchTheme
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -73,23 +73,25 @@ class MainActivity : ComponentActivity() {
         }
 
         Scaffold(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.Companion.fillMaxSize(),
             snackbarHost = { SnackbarHost(snackbarHostState) }
         ) { innerPadding ->
             when {
                 state.isLoading -> {
                     CircularProgressIndicator(
-                        modifier = Modifier
+                        modifier = Modifier.Companion
                             .fillMaxSize()
                             .padding(innerPadding)
                     )
                 }
+
                 state.films.isNotEmpty() -> {
                     FilmsList(
                         films = state.films,
                         onRetry = { viewModel.loadFilms() }
                     )
                 }
+
                 else -> {
                     // Показать пустое состояние или сообщение об ошибке
                 }
@@ -97,5 +99,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-

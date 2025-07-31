@@ -8,7 +8,7 @@
 
     <application
         android:usesCleartextTraffic="true"
-        android:name=".data.di.MyApp"
+        android:name=".di.MyApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -19,7 +19,7 @@
         android:theme="@style/Theme.CinemaSearch">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".presintation.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.CinemaSearch">
             <intent-filter>
