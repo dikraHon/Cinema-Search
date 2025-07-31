@@ -1,4 +1,4 @@
-package com.example.cinemasearch.presintation.viewModelPackage
+package com.example.cinemasearch.presintation.viewModelPackage.mainScreenViewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,13 +9,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-data class FilmsState(
-    val films: List<Films> = emptyList(),
-    val isLoading: Boolean = false,
-    val error: String? = null
-)
-
 class SearchFilmsViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel() {

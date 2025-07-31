@@ -11,4 +11,5 @@ data class Films(
     val poster: String?,
     val rating: Double?,
     val year: Int?,
+    val isFavorite: Boolean = false
 )

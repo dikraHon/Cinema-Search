@@ -2,6 +2,8 @@ package com.example.cinemasearch.presintation.searchPackage
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -22,7 +24,8 @@ import com.example.cinemasearch.R
 fun SearchTopBar(
     searchQuery: String,
     onSearchChange: (String) -> Unit,
-    onMenuClick: () -> Unit
+    onMenuClick: () -> Unit,
+    onFavoritesClick: () -> Unit
 ) {
     TopAppBar(
         title = {
@@ -46,6 +49,14 @@ fun SearchTopBar(
                     painter = painterResource(R.drawable.ic_menu),
                     contentDescription = "Menu"
                 )
+            }
+        },
+        actions = {
+            IconButton(onClick = onFavoritesClick) {
+                Icon(
+                    imageVector = Icons.Default.Favorite,
+                    contentDescription = "Favorites"
+                    )
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(

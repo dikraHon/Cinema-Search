@@ -1,27 +1,20 @@
-package com.example.cinemasearch.presintation.screenListFilms
+package com.example.cinemasearch.presintation.mainScreenListFilms
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
 import com.example.cinemasearch.R
 import com.example.cinemasearch.domain.Films
 
@@ -30,7 +23,10 @@ import com.example.cinemasearch.domain.Films
 fun FilmsList(
     films: List<Films>,
     onRetry: () -> Unit,
-    onMenuClick: () -> Unit
+    onMenuClick: () -> Unit,
+    onFavoriteClick: (Films) -> Unit,
+    onFilmClick: (Long) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Column {
         TopAppBar(
@@ -42,11 +38,21 @@ fun FilmsList(
                         contentDescription = "Menu"
                     )
                 }
+            },
+            actions = {
+                IconButton(onClick = { } ) {
+                    Icon(Icons.Default.Favorite, contentDescription = "Favorites")
+                }
             }
         )
         LazyColumn {
             items(films) { film ->
-                FilmCard(film = film)
+                FilmCard(
+                    film = film,
+                    onFavoriteClick = { onFavoriteClick(film) },
+                    onFilmClick = { onFilmClick(film.id) },
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
         }
     }

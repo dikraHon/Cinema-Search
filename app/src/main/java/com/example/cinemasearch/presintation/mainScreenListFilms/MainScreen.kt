@@ -1,4 +1,4 @@
-package com.example.cinemasearch.presintation.screenListFilms
+package com.example.cinemasearch.presintation.mainScreenListFilms
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -20,25 +20,31 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.cinemasearch.presintation.favoriteScreenPackage.FavoritesScreen
 import com.example.cinemasearch.presintation.menuFilmsPackage.DrawerContent
 import com.example.cinemasearch.presintation.searchPackage.SearchTopBar
-import com.example.cinemasearch.presintation.viewModelPackage.SearchFilmsViewModel
+import com.example.cinemasearch.presintation.viewModelPackage.favoritesScreenViewModel.FavoritesViewModel
+import com.example.cinemasearch.presintation.viewModelPackage.mainScreenViewModel.SearchFilmsViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun MainScreen(viewModel: SearchFilmsViewModel) {
+fun MainScreen(
+    viewModel: SearchFilmsViewModel,
+    favoritesViewModel: FavoritesViewModel
+) {
     val navController = rememberNavController()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val state = viewModel.state.collectAsStateWithLifecycle().value
     val snackbarHostState = remember { SnackbarHostState() }
-    val context = LocalContext.current
     var searchQuery by remember { mutableStateOf("") }
     val debouncedSearchQuery = remember { mutableStateOf("") }
+    val context = LocalContext.current
 
     LaunchedEffect(searchQuery) {
         delay(300)
@@ -76,10 +82,6 @@ fun MainScreen(viewModel: SearchFilmsViewModel) {
                 onItemSelected = { route ->
                     scope.launch { drawerState.close() }
                     navController.navigate(route)
-                    /*                    navController.navigate(route) {
-                                            popUpTo(navController.graph.startDestinationId)
-                                            launchSingleTop = true
-                                        }*/
                 },
                 onClose = { scope.launch { drawerState.close() } }
             )
@@ -94,10 +96,10 @@ fun MainScreen(viewModel: SearchFilmsViewModel) {
                         scope.launch {
                             drawerState.open()
                         }
-                    }
+                    },
+                    onFavoritesClick = { navController.navigate("favorites") }
                 )
             },
-           // modifier = Modifier.fillMaxSize(),
             snackbarHost = { SnackbarHost(snackbarHostState) }
         ) { innerPadding ->
             NavHost(
@@ -117,7 +119,15 @@ fun MainScreen(viewModel: SearchFilmsViewModel) {
                             FilmsList(
                                 films = state.films,
                                 onRetry = { viewModel.loadFilms() },
-                                onMenuClick = { scope.launch { drawerState.open() } }
+                                onMenuClick = { scope.launch { drawerState.open() } },
+                                onFavoriteClick = { film -> favoritesViewModel.toggleFavorites(films = film) },
+                                onFilmClick = { filmId ->
+                                    // Навигация к деталям фильма
+                                    navController.navigate(
+                                        "filmDetails/$filmId"
+                                    )
+                                },
+                                modifier = Modifier.fillMaxSize()
                             )
                         }
 
@@ -126,9 +136,13 @@ fun MainScreen(viewModel: SearchFilmsViewModel) {
                         }
                     }
                 }
+                // возможно надо изменить
                 composable("favorites") {
-                    // Здесь будет экран избранного
-                    Text("Favorites Screen")
+                    FavoritesScreen(
+                        viewModel = favoritesViewModel,
+                        onFilmClick = { filmId ->
+                        }
+                    )
                 }
                 composable("settings") {
                     // Здесь будет экран настроек

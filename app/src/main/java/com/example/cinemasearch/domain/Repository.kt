@@ -6,9 +6,11 @@ interface Repository {
 
     suspend fun getFilmById(id: Long): Films
 
-    suspend fun addFilmById(id: Long): Films
+    suspend fun addToFavorites(films: Films)
 
-    suspend fun deleteFilmById(id: Long)
+    suspend fun removeFromFavorites(filmId: Long)
+
+    suspend fun getFavoritesFilms(): List<Films>
 
     suspend fun searchFilms(query: String): List<Films>
 

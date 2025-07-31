@@ -61,21 +61,22 @@ class RepositoryImpl @Inject constructor(
         }
     }
 
-    // Аналогично обновить другие методы
-
-    override suspend fun addFilmById(id: Long): Films {
-        val filmsItem = Films(id = id, "asd", "asd", "", 1.0, 2001)
-        return apiService.addFilm(filmsItem)
+    override suspend fun getFavoritesFilms(): List<Films> {
+        return filmDao.getFavoriteFilms()
     }
 
-    override suspend fun deleteFilmById(id: Long) {
-        filmDao.deleteFilmById(id)
+    override suspend fun addToFavorites(films: Films) {
+        return filmDao.insertFavoritesFilms(films)
+    }
+
+    override suspend fun removeFromFavorites(filmId: Long) {
+        filmDao.deleteFavoriteFilms(filmId)
     }
 
     override suspend fun getFilmById(id: Long): Films {
         return try {
             val response = apiService.getFilmById(apiKey, id)
-            filmDao.insertFilms(response)
+            filmDao.insertFavoritesFilms(response)
             response
         } catch (e: Exception) {
             filmDao.getFilmById(id) ?: throw e
