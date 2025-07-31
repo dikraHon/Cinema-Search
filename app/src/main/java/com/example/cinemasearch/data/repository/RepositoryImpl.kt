@@ -16,15 +16,6 @@ class RepositoryImpl @Inject constructor(
     private val apiKey = ApiConfig.API_KEY
     private val filmDao = getDao.filmsDao()
 
-    override suspend fun addFilmById(id: Long): Films {
-        val filmsItem = Films(id = id, "asd", "asd", "", 1.0, 2001)
-        return apiService.addFilm(filmsItem)
-    }
-
-    override suspend fun deleteFilmById(id: Long) {
-        filmDao.deleteFilmById(id)
-    }
-
     override suspend fun getAllFilms(): List<Films> {
         return try {
             val response = apiService.getFilms(apiKey)
@@ -51,8 +42,35 @@ class RepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun searchFilms(query: String): List<Films> {
+        return try {
+            val response = apiService.searchFilms(apiKey, query)
+            response.docs.map { filmDto ->
+                val film = Films(
+                    id = filmDto.id,
+                    name = filmDto.name ?: "no name",
+                    description = filmDto.description ?: "no description",
+                    poster = filmDto.poster?.url ?: "",
+                    rating = filmDto.rating?.imdb,
+                    year = filmDto.year ?: 0
+                )
+                film
+            }
+        } catch (e: Exception){
+            emptyList()
+        }
+    }
 
     // Аналогично обновить другие методы
+
+    override suspend fun addFilmById(id: Long): Films {
+        val filmsItem = Films(id = id, "asd", "asd", "", 1.0, 2001)
+        return apiService.addFilm(filmsItem)
+    }
+
+    override suspend fun deleteFilmById(id: Long) {
+        filmDao.deleteFilmById(id)
+    }
 
     override suspend fun getFilmById(id: Long): Films {
         return try {

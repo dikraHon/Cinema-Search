@@ -20,7 +20,7 @@ class SearchFilmsViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel() {
     private val _state = MutableStateFlow(FilmsState())
-    val filmsState = _state.asStateFlow()
+    val state = _state.asStateFlow()
 
     fun loadFilms() {
         viewModelScope.launch {
@@ -44,6 +44,30 @@ class SearchFilmsViewModel @Inject constructor(
             }
         }
     }
+    //исправить возможно
+    fun searchFilms(query: String) {
+        viewModelScope.launch {
+            _state.update { it.copy(isLoading = true) }
+            try {
+                val films = repository.searchFilms(query)
+                _state.update {
+                    it.copy(
+                        films = films,
+                        isLoading = false,
+                        error = null
+                    )
+                }
+            } catch (e: Exception) {
+                _state.update {
+                    it.copy(
+                        isLoading = false,
+                        error = e.message
+                    )
+                }
+            }
+        }
+    }
+
     fun clearError() {
         _state.update { it.copy(error = null) }
     }

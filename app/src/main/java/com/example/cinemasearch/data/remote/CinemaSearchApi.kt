@@ -30,4 +30,11 @@ interface CinemaSearchApi {
         @Body filmItem: Films
     ): Films
 
+    @GET("v1.4/movie/search")
+    suspend fun searchFilms(
+        @Header("X-API-KEY") apiKey: String,
+        @Query("query") query: String,
+        @Query("limit") limit: Int = 20
+    ): MovieResponse
+
 }

@@ -12,8 +12,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -21,7 +24,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.cinemasearch.presintation.menuFilmsPackage.DrawerContent
+import com.example.cinemasearch.presintation.searchPackage.SearchTopBar
 import com.example.cinemasearch.presintation.viewModelPackage.SearchFilmsViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
@@ -29,12 +34,15 @@ fun MainScreen(viewModel: SearchFilmsViewModel) {
     val navController = rememberNavController()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-    val state = viewModel.filmsState.collectAsStateWithLifecycle().value
+    val state = viewModel.state.collectAsStateWithLifecycle().value
     val snackbarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
+    var searchQuery by remember { mutableStateOf("") }
+    val debouncedSearchQuery = remember { mutableStateOf("") }
 
-    LaunchedEffect(Unit) {
-        viewModel.loadFilms()
+    LaunchedEffect(searchQuery) {
+        delay(300)
+        debouncedSearchQuery.value = searchQuery
     }
 
     LaunchedEffect(state.error) {
@@ -49,23 +57,47 @@ fun MainScreen(viewModel: SearchFilmsViewModel) {
         }
     }
 
+    LaunchedEffect(debouncedSearchQuery.value) {
+        if (debouncedSearchQuery.value.length > 2) {
+            viewModel.searchFilms(debouncedSearchQuery.value)
+        } else if (debouncedSearchQuery.value.isEmpty()) {
+            viewModel.loadFilms()
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        viewModel.loadFilms()
+    }
+
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
             DrawerContent(
                 onItemSelected = { route ->
                     scope.launch { drawerState.close() }
-                    navController.navigate(route) {
-                        popUpTo(navController.graph.startDestinationId)
-                        launchSingleTop = true
-                    }
+                    navController.navigate(route)
+                    /*                    navController.navigate(route) {
+                                            popUpTo(navController.graph.startDestinationId)
+                                            launchSingleTop = true
+                                        }*/
                 },
                 onClose = { scope.launch { drawerState.close() } }
             )
         }
     ) {
         Scaffold(
-            modifier = Modifier.fillMaxSize(),
+            topBar = {
+                SearchTopBar(
+                    searchQuery = searchQuery,
+                    onSearchChange = { searchQuery = it },
+                    onMenuClick = {
+                        scope.launch {
+                            drawerState.open()
+                        }
+                    }
+                )
+            },
+           // modifier = Modifier.fillMaxSize(),
             snackbarHost = { SnackbarHost(snackbarHostState) }
         ) { innerPadding ->
             NavHost(
@@ -80,6 +112,7 @@ fun MainScreen(viewModel: SearchFilmsViewModel) {
                                 modifier = Modifier.fillMaxSize()
                             )
                         }
+
                         state.films.isNotEmpty() -> {
                             FilmsList(
                                 films = state.films,
@@ -87,6 +120,7 @@ fun MainScreen(viewModel: SearchFilmsViewModel) {
                                 onMenuClick = { scope.launch { drawerState.open() } }
                             )
                         }
+
                         else -> {
                             // Показать пустое состояние или сообщение об ошибке
                         }
