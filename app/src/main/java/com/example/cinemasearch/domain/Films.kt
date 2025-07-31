@@ -9,5 +9,6 @@ data class Films(
     val name: String?,
     val description: String?,
     val poster: String?,
-    val rating: Double?
+    val rating: Double?,
+    val year: Int?,
 )

@@ -31,14 +31,14 @@ class SearchFilmsViewModel @Inject constructor(
                     it.copy(
                         films = films,
                         isLoading = false,
-                        error = if (films.isEmpty()) "Нет данных" else null
+                        error = if (films.isEmpty()) "no data" else null
                     )
                 }
             } catch (e: Exception) {
                 _state.update {
                     it.copy(
                         isLoading = false,
-                        error = "Ошибка: ${e.message ?: "неизвестная ошибка"}"
+                        error = "error: ${e.message ?: "unknown error"}"
                     )
                 }
             }

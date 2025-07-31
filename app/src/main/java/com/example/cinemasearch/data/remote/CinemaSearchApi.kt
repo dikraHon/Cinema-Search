@@ -16,6 +16,7 @@ interface CinemaSearchApi {
         @Header("X-API-KEY") apiKey: String,
         @Query("page") page: Int = 1,
         @Query("limit") limit: Int = 50,
+        //@Query("selectFields") fields: String = "id name alternativeName description poster.url rating.kp rating.imdb year"
 
     ): MovieResponse
     @GET("v1.4/movie/{id}")

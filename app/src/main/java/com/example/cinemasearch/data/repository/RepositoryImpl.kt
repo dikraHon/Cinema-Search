@@ -17,7 +17,7 @@ class RepositoryImpl @Inject constructor(
     private val filmDao = getDao.filmsDao()
 
     override suspend fun addFilmById(id: Long): Films {
-        val filmsItem = Films(id = id, "asd", "asd", "", 1.0)
+        val filmsItem = Films(id = id, "asd", "asd", "", 1.0, 2001)
         return apiService.addFilm(filmsItem)
     }
 
@@ -28,30 +28,28 @@ class RepositoryImpl @Inject constructor(
     override suspend fun getAllFilms(): List<Films> {
         return try {
             val response = apiService.getFilms(apiKey)
-            response.docs.mapNotNull { filmDto ->
-                val posterUrl = filmDto.poster?.url
-                if (posterUrl != null) {
-                    val film = Films(
-                        id = filmDto.id,
-                        name = filmDto.name,
-                        description = filmDto.description,
-                        poster = filmDto.poster.url,
-                        rating = filmDto.rating?.kp
-                    ).also {
-                        Log.d("POSTER_FILTER", "Добавлен фильм с постером: ${it.name}")
-                    }
-                    film
+            response.docs.map { filmDto ->
+                val imdbRating = filmDto.rating?.imdb ?: 0.0
+                val rating = if (imdbRating == 0.0) {
+                    generateRandomRating()
                 } else {
-                    Log.d("POSTER_FILTER", "Пропущен фильм без постера: ${filmDto.name}")
-                    null
+                    imdbRating
                 }
+                val film = Films(
+                    id = filmDto.id,
+                    name = filmDto.name ?: "no name",
+                    description = filmDto.description ?: "no description",
+                    poster = filmDto.poster?.url ?: "",
+                    rating = rating,
+                    year = filmDto.year ?: 0
+                )
+                film
             }
         } catch (e: Exception) {
-            Log.e("API_ERROR", "Ошибка: ${e.message}")
+            Log.e("API_ERROR", "Error: ${e.message}")
             emptyList()
         }
     }
-
 
 
     // Аналогично обновить другие методы
@@ -66,5 +64,8 @@ class RepositoryImpl @Inject constructor(
         }
     }
 
+    private fun generateRandomRating(): Double {
+        return (50..90).random() / 10.0
+    }
 
 }

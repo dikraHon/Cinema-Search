@@ -28,7 +28,7 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "films_database"
                 )
-                    .fallbackToDestructiveMigration() // Разрушительная миграция (удалит старую БД)
+                    .fallbackToDestructiveMigration(false) // Разрушительная миграция (удалит старую БД)
                     // ИЛИ .addMigrations(MIGRATION_1_2) для кастомной миграции
                     .build()
                 Instance = instance

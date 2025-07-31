@@ -48,18 +48,22 @@ fun FilmCard(film: Films) {
 
             Column(Modifier.padding(16.dp)) {
                 Text(
-                    text = film.name ?: "Без названия",
+                    text = film.name ?: "No name",
                     style = MaterialTheme.typography.titleMedium
                 )
                 Spacer(Modifier.height(4.dp))
                 Text(
-                    text = film.description ?: "Нет описания",
+                    text = film.description ?: "no description",
                     style = MaterialTheme.typography.bodyMedium
                 )
                 Spacer(Modifier.height(4.dp))
                 Text(
                     text = "rating: ${film.rating.toString()}",
                     style = MaterialTheme.typography.bodyMedium
+                )
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    text = "year: ${film.year}"
                 )
             }
         }

@@ -11,6 +11,12 @@ data class FilmDTO(
     val genres: List<GenreDTO>
 ) {
     data class PosterDTO(val url: String?)
-    data class RatingDTO(val kp: Double?)
+    data class RatingDTO(
+        val kp: Double?,
+        val imdb: Double?,
+        val filmCritics: Double?,
+        val russianFilmCritics: Double?,
+        val await: Double?
+    )
     data class GenreDTO(val name: String)
 }
