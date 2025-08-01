@@ -22,6 +22,8 @@ import com.example.cinemasearch.domain.Films
 @Composable
 fun FilmsList(
     films: List<Films>,
+    isFavoriteList: List<Long>, // Список ID избранных фильмов
+    onFavoriteClick: (Films) -> Unit,
     onRetry: () -> Unit,
     onMenuClick: () -> Unit,
     onFilmClick: (Long) -> Unit,
@@ -40,11 +42,12 @@ fun FilmsList(
             },
         )
         LazyColumn {
-            items(films, key = {film -> film.id}) { film ->
+            items(films, key = { it.id }) { film ->
                 FilmCard(
                     film = film,
+                    isFavorite = isFavoriteList.contains(film.id), // Передаем состояние
                     onFilmClick = { onFilmClick(film.id) },
-                    modifier = Modifier.fillMaxWidth()
+                    onFavoriteClick = { onFavoriteClick(film) } // Пробрасываем колбэк
                 )
             }
         }

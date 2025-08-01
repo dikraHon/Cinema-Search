@@ -24,8 +24,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.cinemasearch.presintation.favoriteScreenPackage.FavoritesScreen
 import com.example.cinemasearch.presintation.menuFilmsPackage.DrawerContent
 import com.example.cinemasearch.presintation.searchPackage.SearchTopBar
+import com.example.cinemasearch.presintation.viewModelPackage.favoritesScreenViewModel.FavoritesViewModel
 import com.example.cinemasearch.presintation.viewModelPackage.mainScreenViewModel.SearchFilmsViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -33,6 +35,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun MainScreen(
     viewModel: SearchFilmsViewModel,
+    favoritesViewModel: FavoritesViewModel
 ) {
     val navController = rememberNavController()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -117,6 +120,14 @@ fun MainScreen(
                         state.films.isNotEmpty() -> {
                             FilmsList(
                                 films = state.films,
+                                isFavoriteList = favoritesViewModel.favoriteFilms.map { it.id }, // Список ID избранных
+                                onFavoriteClick = { film ->
+                                    if (favoritesViewModel.favoriteFilms.any { it.id == film.id }) {
+                                        favoritesViewModel.removeFromFavorites(film.id)
+                                    } else {
+                                        favoritesViewModel.addToFavorites(film)
+                                    }
+                                },
                                 onRetry = { viewModel.loadFilms() },
                                 onMenuClick = { scope.launch { drawerState.open() } },
                                 onFilmClick = { /* обработка клика */ },
@@ -131,6 +142,10 @@ fun MainScreen(
                 }
                 // возможно надо изменить
                 composable("favorites") {
+                    FavoritesScreen(
+                        favoritesViewModel = favoritesViewModel,
+                        modifier = Modifier.fillMaxSize()
+                    )
                 }
                 composable("settings") {
                     // Здесь будет экран настроек
