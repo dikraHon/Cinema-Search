@@ -3,34 +3,28 @@ package com.example.cinemasearch.presintation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import com.example.cinemasearch.di.MyApp
 import com.example.cinemasearch.presintation.mainScreenListFilms.MainScreen
 import com.example.cinemasearch.presintation.viewModelPackage.FactoryViewModel
-import com.example.cinemasearch.presintation.viewModelPackage.favoritesScreenViewModel.FavoritesViewModel
 import com.example.cinemasearch.presintation.viewModelPackage.mainScreenViewModel.SearchFilmsViewModel
 import com.example.cinemasearch.ui.theme.CinemaSearchTheme
 
 import javax.inject.Inject
 
 class MainActivity : ComponentActivity() {
-
     @Inject
     lateinit var viewModelFactory: FactoryViewModel
-    private val viewModel: SearchFilmsViewModel by viewModels { viewModelFactory }
-    private val favoritesViewModel: FavoritesViewModel by viewModels { viewModelFactory }
+    private val viewModel: SearchFilmsViewModel by viewModels() { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as MyApp).appComponent.inject(this)
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
 
         setContent {
             CinemaSearchTheme {
                 MainScreen(
                     viewModel = viewModel,
-                    favoritesViewModel = favoritesViewModel
                 )
             }
         }

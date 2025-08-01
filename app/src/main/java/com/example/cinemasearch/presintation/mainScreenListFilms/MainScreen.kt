@@ -24,10 +24,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.cinemasearch.presintation.favoriteScreenPackage.FavoritesScreen
 import com.example.cinemasearch.presintation.menuFilmsPackage.DrawerContent
 import com.example.cinemasearch.presintation.searchPackage.SearchTopBar
-import com.example.cinemasearch.presintation.viewModelPackage.favoritesScreenViewModel.FavoritesViewModel
 import com.example.cinemasearch.presintation.viewModelPackage.mainScreenViewModel.SearchFilmsViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -35,7 +33,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun MainScreen(
     viewModel: SearchFilmsViewModel,
-    favoritesViewModel: FavoritesViewModel
 ) {
     val navController = rememberNavController()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -47,7 +44,7 @@ fun MainScreen(
     val context = LocalContext.current
 
     LaunchedEffect(searchQuery) {
-        delay(300)
+        delay(1000)
         debouncedSearchQuery.value = searchQuery
     }
 
@@ -81,7 +78,10 @@ fun MainScreen(
             DrawerContent(
                 onItemSelected = { route ->
                     scope.launch { drawerState.close() }
-                    navController.navigate(route)
+                    navController.navigate(route) {
+                        popUpTo(navController.graph.startDestinationId)
+                        launchSingleTop = true
+                    }
                 },
                 onClose = { scope.launch { drawerState.close() } }
             )
@@ -114,35 +114,23 @@ fun MainScreen(
                                 modifier = Modifier.fillMaxSize()
                             )
                         }
-
                         state.films.isNotEmpty() -> {
                             FilmsList(
                                 films = state.films,
                                 onRetry = { viewModel.loadFilms() },
                                 onMenuClick = { scope.launch { drawerState.open() } },
-                                onFavoriteClick = { film -> favoritesViewModel.toggleFavorites(films = film) },
-                                onFilmClick = { filmId ->
-                                    // Навигация к деталям фильма
-                                    navController.navigate(
-                                        "filmDetails/$filmId"
-                                    )
-                                },
+                                onFilmClick = { /* обработка клика */ },
                                 modifier = Modifier.fillMaxSize()
                             )
                         }
 
                         else -> {
-                            // Показать пустое состояние или сообщение об ошибке
+                            Text("Нет фильмов", modifier = Modifier.fillMaxSize())
                         }
                     }
                 }
                 // возможно надо изменить
                 composable("favorites") {
-                    FavoritesScreen(
-                        viewModel = favoritesViewModel,
-                        onFilmClick = { filmId ->
-                        }
-                    )
                 }
                 composable("settings") {
                     // Здесь будет экран настроек

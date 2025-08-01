@@ -24,7 +24,6 @@ fun FilmsList(
     films: List<Films>,
     onRetry: () -> Unit,
     onMenuClick: () -> Unit,
-    onFavoriteClick: (Films) -> Unit,
     onFilmClick: (Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -39,17 +38,11 @@ fun FilmsList(
                     )
                 }
             },
-            actions = {
-                IconButton(onClick = { } ) {
-                    Icon(Icons.Default.Favorite, contentDescription = "Favorites")
-                }
-            }
         )
         LazyColumn {
-            items(films) { film ->
+            items(films, key = {film -> film.id}) { film ->
                 FilmCard(
                     film = film,
-                    onFavoriteClick = { onFavoriteClick(film) },
                     onFilmClick = { onFilmClick(film.id) },
                     modifier = Modifier.fillMaxWidth()
                 )

@@ -1,5 +1,7 @@
 package com.example.cinemasearch.presintation.mainScreenListFilms
 
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -24,15 +26,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.cinemasearch.R
 import com.example.cinemasearch.domain.Films
+import com.example.cinemasearch.presintation.viewModelPackage.favoritesScreenViewModel.FavoritesViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun FilmCard(
     film: Films,
     onFilmClick: () -> Unit,
-    onFavoriteClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -63,17 +67,6 @@ fun FilmCard(
                         .height(200.dp),
                     contentScale = ContentScale.Crop
                 )
-
-                IconButton(
-                    onClick = onFavoriteClick,
-                    modifier = Modifier.padding(8.dp)
-                ) {
-                    Icon(
-                        imageVector = if (film.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                        contentDescription = "Favorite",
-                        tint = if (film.isFavorite) Color.Red else Color.White
-                    )
-                }
             }
 
             Column(Modifier.padding(16.dp)) {

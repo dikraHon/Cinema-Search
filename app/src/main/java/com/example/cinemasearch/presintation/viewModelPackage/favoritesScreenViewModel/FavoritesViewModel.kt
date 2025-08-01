@@ -20,6 +20,10 @@ class FavoritesViewModel @Inject constructor(
         loadFavorites()
     }
 
+    suspend fun isFavorite(filmId: Long): Boolean {
+        return repository.getFavoritesFilms().any { it.id == filmId }
+    }
+
     fun loadFavorites() {
         viewModelScope.launch {
             _favoritesState.value = _favoritesState.value.copy(isLoading = true)
@@ -41,17 +45,20 @@ class FavoritesViewModel @Inject constructor(
 
     fun toggleFavorites(films: Films) {
         viewModelScope.launch {
+            _favoritesState.value = _favoritesState.value.copy(isLoading = true)
             try {
                 if (films.isFavorite) {
                     repository.removeFromFavorites(films.id)
                 } else {
                     repository.addToFavorites(films)
                 }
-                loadFavorites()
-            } catch (e: java.lang.Exception) {
+                loadFavorites() // Перезагружаем список
+            } catch (e: Exception) {
                 _favoritesState.value = _favoritesState.value.copy(
-                    error = e.message ?: "Failed to update favorites"
+                    error = "Ошибка: ${e.localizedMessage}"
                 )
+            } finally {
+                _favoritesState.value = _favoritesState.value.copy(isLoading = false)
             }
         }
     }

@@ -13,14 +13,14 @@ import kotlin.reflect.KClass
 
 @Module
 abstract class ViewModelModule {
+    @Binds
+    abstract fun bindRepository(impl: RepositoryImpl): Repository
 
     @Binds
     @IntoMap
     @ViewModelKey(FavoritesViewModel::class)
     abstract fun bindFavoritesViewModel(viewModel: FavoritesViewModel): ViewModel
 
-    @Binds
-    abstract fun bindRepository(impl: RepositoryImpl): Repository
 
     @Binds
     @IntoMap
