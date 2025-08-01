@@ -19,23 +19,7 @@ class RepositoryImpl @Inject constructor(
     override suspend fun getAllFilms(): List<Films> {
         return try {
             val response = apiService.getFilms(apiKey)
-            response.docs.map { filmDto ->
-                val imdbRating = filmDto.rating?.imdb ?: 0.0
-                val rating = if (imdbRating == 0.0) {
-                    generateRandomRating()
-                } else {
-                    imdbRating
-                }
-                val film = Films(
-                    id = filmDto.id,
-                    name = filmDto.name ?: "no name",
-                    description = filmDto.description ?: "no description",
-                    poster = filmDto.poster?.url ?: "",
-                    rating = rating,
-                    year = filmDto.year ?: 0
-                )
-                film
-            }
+            processFilmResponse(response.docs)
         } catch (e: Exception) {
             Log.e("API_ERROR", "Error: ${e.message}")
             emptyList()
@@ -45,19 +29,70 @@ class RepositoryImpl @Inject constructor(
     override suspend fun searchFilms(query: String): List<Films> {
         return try {
             val response = apiService.searchFilms(apiKey, query)
-            response.docs.map { filmDto ->
-                val film = Films(
-                    id = filmDto.id,
-                    name = filmDto.name ?: "no name",
-                    description = filmDto.description ?: "no description",
-                    poster = filmDto.poster?.url ?: "",
-                    rating = filmDto.rating?.imdb,
-                    year = filmDto.year ?: 0
-                )
-                film
-            }
+            processFilmResponse(response.docs)
         } catch (e: Exception){
             emptyList()
+        }
+    }
+
+    override suspend fun getPopularFilms(): List<Films> {
+        return try {
+            val response = apiService.getFilms(
+                apiKey = apiKey,
+                sortField = "rating.kp",
+                sortType = "-1",
+                limit = 20
+            )
+            processFilmResponse(response.docs)
+        } catch (e: Exception) {
+            emptyList()
+        }
+    }
+
+    override suspend fun getTopRatedFilms(): List<Films> {
+        return try {
+            val response = apiService.getFilms(
+                apiKey = apiKey,
+                sortField = "votes.kp",
+                sortType = "-1",
+                limit = 20
+            )
+            processFilmResponse(response.docs)
+        } catch (e: Exception) {
+            emptyList()
+        }
+    }
+
+    override suspend fun getNewReleases(): List<Films> {
+        return try {
+            val response = apiService.getFilms(
+                apiKey = apiKey,
+                sortField = "premiere.world", // Используем поле премьеры
+                sortType = "-1", // Сортировка по убыванию (новые сначала)
+                limit = 20
+            )
+            processFilmResponse(response.docs)
+        } catch (e: Exception) {
+            emptyList()
+        }
+    }
+
+    private fun processFilmResponse(films: List<FilmDTO>): List<Films> {
+        return films.map { filmDto ->
+            val imdbRating = filmDto.rating?.imdb ?: 0.0
+            val rating = if (imdbRating == 0.0) {
+                generateRandomRating()
+            } else {
+                imdbRating
+            }
+            Films(
+                id = filmDto.id,
+                name = filmDto.name ?: "no name",
+                description = filmDto.description ?: "no description",
+                poster = filmDto.poster?.url ?: "",
+                rating = rating,
+                year = filmDto.year ?: 0
+            )
         }
     }
 
@@ -71,16 +106,6 @@ class RepositoryImpl @Inject constructor(
 
     override suspend fun removeFromFavorites(filmId: Long) {
         filmDao.deleteFavoriteFilms(filmId)
-    }
-
-    override suspend fun getFilmById(id: Long): Films {
-        return try {
-            val response = apiService.getFilmById(apiKey, id)
-            filmDao.insertFavoritesFilms(response)
-            response
-        } catch (e: Exception) {
-            filmDao.getFilmById(id) ?: throw e
-        }
     }
 
     private fun generateRandomRating(): Double {

@@ -1,13 +1,12 @@
 package com.example.cinemasearch.presintation.mainScreenListFilms
 
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -23,101 +22,126 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.cinemasearch.R
 import com.example.cinemasearch.domain.Films
-import com.example.cinemasearch.presintation.viewModelPackage.favoritesScreenViewModel.FavoritesViewModel
-import kotlinx.coroutines.launch
 
 @Composable
 fun FilmCard(
     film: Films,
-    isFavorite: Boolean, // Принимаем состояние извне
+    isFavorite: Boolean,
     onFilmClick: () -> Unit,
-    onFavoriteClick: () -> Unit, // Колбэк для клика
+    onFavoriteClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-
-    //var isFavorite by remember { mutableStateOf(false) }
     Card(
         modifier = modifier
             .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp)
             .clickable(onClick = onFilmClick),
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
-        Column {
-            Box(contentAlignment = Alignment.TopEnd) {
-                // Безопасная загрузка изображения
-                film.poster?.let { url ->
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalAlignment = Alignment.Top
+        ) {
+            // Постер (левая часть)
+            Box(
+                modifier = Modifier
+                    .width(100.dp)
+                    .height(150.dp)
+                    .clip(MaterialTheme.shapes.medium),
+                contentAlignment = Alignment.Center
+            ) {
+                film.poster?.takeIf { it.isNotBlank() }?.let { url ->
                     AsyncImage(
                         model = url,
                         contentDescription = film.name,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(200.dp),
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop,
                         placeholder = painterResource(R.drawable.place_holder),
-                        error = painterResource(R.drawable.place_holder),
-                        contentScale = ContentScale.Crop
+                        error = painterResource(R.drawable.place_holder)
                     )
                 } ?: Image(
                     painter = painterResource(R.drawable.place_holder),
                     contentDescription = "No poster",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp),
+                    modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
                 )
             }
 
-            Column(Modifier.padding(16.dp)) {
+            // Информация о фильме (правая часть)
+            Column(
+                modifier = Modifier
+                    .padding(start = 16.dp)
+                    .weight(1f)
+            ) {
+                // Название фильма
                 Text(
-                    text = film.name ?: "No name",
-                    style = MaterialTheme.typography.titleMedium
+                    text = film.name ?: "No title",
+                    style = MaterialTheme.typography.titleMedium,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.padding(bottom = 4.dp)
                 )
-                Spacer(Modifier.height(4.dp))
-                Text(
-                    text = film.description ?: "No description",
-                    style = MaterialTheme.typography.bodyMedium
-                )
-                Spacer(Modifier.height(4.dp))
-                Text(
-                    text = "Rating: ${"%.1f".format(film.rating)}",
-                    style = MaterialTheme.typography.bodyMedium
-                )
-                Spacer(Modifier.height(4.dp))
-                Text(
-                    text = "Year: ${film.year ?: "N/A"}",
-                    style = MaterialTheme.typography.bodyMedium
-                )
+
+                // Рейтинг
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable { onFavoriteClick() } // Клик на всю строку
+                    modifier = Modifier.padding(bottom = 4.dp)
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_menu),
+                        contentDescription = "Rating",
+                        tint = Color(0xFFFFC107),
+                        modifier = Modifier.size(16.dp)
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(
+                        text = "%.1f".format(film.rating ?: 0.0),
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+
+                // Год выпуска
+                Text(
+                    text = film.year?.toString() ?: "Year: N/A",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+
+                // Описание (если есть)
+                film.description?.takeIf { it.isNotBlank() }?.let { description ->
+                    Text(
+                        text = description.take(100) + if (description.length > 100) "..." else "",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
+                        maxLines = 3,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
+                }
+
+                // Кнопка "Избранное"
+                IconButton(
+                    onClick = onFavoriteClick,
+                    modifier = Modifier.align(Alignment.End)
                 ) {
                     Icon(
                         imageVector = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                         contentDescription = "Favorite",
-                        tint = if (isFavorite) Color.Red else Color.Gray,
-                        modifier = Modifier.size(24.dp)
-                    )
-                    Spacer(Modifier.width(8.dp))
-                    Text(
-                        text = if (isFavorite) "В избранном" else "Добавить в избранное",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = if (isFavorite) Color.Red else Color.Gray
+                        tint = if (isFavorite) Color.Red else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                     )
                 }
             }

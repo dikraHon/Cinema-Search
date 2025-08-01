@@ -5,5 +5,6 @@ import com.example.cinemasearch.domain.Films
 data class FilmsState(
     val films: List<Films> = emptyList(),
     val isLoading: Boolean = false,
-    val error: String? = null
+    val error: String? = null,
+    val category: FilmCategory = FilmCategory.POPULAR
 )

@@ -4,8 +4,11 @@ interface Repository {
 
     suspend fun getAllFilms(): List<Films>
 
-    suspend fun getFilmById(id: Long): Films
+    suspend fun getPopularFilms(): List<Films>
 
+    suspend fun getTopRatedFilms(): List<Films>
+
+    suspend fun getNewReleases(): List<Films>
     suspend fun addToFavorites(films: Films)
 
     suspend fun removeFromFavorites(filmId: Long)

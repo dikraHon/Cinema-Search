@@ -18,7 +18,6 @@ class FavoritesViewModel @Inject constructor(
         _favoriteFilms.value = _favoriteFilms.value + film
     }
 
-    // Удалить фильм из избранного
     fun removeFromFavorites(filmId: Long) {
         _favoriteFilms.value = _favoriteFilms.value.filter { it.id != filmId }
     }

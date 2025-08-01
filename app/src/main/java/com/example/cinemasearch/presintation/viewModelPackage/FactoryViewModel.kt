@@ -11,7 +11,7 @@ class FactoryViewModel @Inject constructor(
     private val searchFilmsViewModelProvider: Provider<SearchFilmsViewModel>,
     private val favoritesViewModelProvider: Provider<FavoritesViewModel>
 ) : ViewModelProvider.Factory {
-
+    @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(SearchFilmsViewModel::class.java) -> {

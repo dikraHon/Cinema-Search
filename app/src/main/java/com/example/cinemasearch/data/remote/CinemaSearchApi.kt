@@ -14,21 +14,11 @@ interface CinemaSearchApi {
     @GET("v1.4/movie")
     suspend fun getFilms(
         @Header("X-API-KEY") apiKey: String,
-        @Query("page") page: Int = 1,
+        @Query("sortField") sortField: String? = null,
+        @Query("sortType") sortType: String? = null,
         @Query("limit") limit: Int = 50,
-        //@Query("selectFields") fields: String = "id name alternativeName description poster.url rating.kp rating.imdb year"
-
+        @Query("query") query: String? = null
     ): MovieResponse
-    @GET("v1.4/movie/{id}")
-    suspend fun getFilmById(
-        @Header("X-API-KEY") apiKey: String,
-        @Path("id") id: Long
-    ): Films
-
-    @POST("films")
-    suspend fun addFilm(
-        @Body filmItem: Films
-    ): Films
 
     @GET("v1.4/movie/search")
     suspend fun searchFilms(
