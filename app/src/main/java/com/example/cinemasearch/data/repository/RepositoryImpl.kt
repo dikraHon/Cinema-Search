@@ -5,6 +5,7 @@ import com.example.cinemasearch.data.database.AppDatabase
 import com.example.cinemasearch.di.ApiService
 import com.example.cinemasearch.data.remote.ApiConfig
 import com.example.cinemasearch.data.remote.CinemaSearchApi
+import com.example.cinemasearch.domain.FilmDetails
 import com.example.cinemasearch.domain.Films
 import com.example.cinemasearch.domain.Repository
 import javax.inject.Inject
@@ -18,7 +19,7 @@ class RepositoryImpl @Inject constructor(
 
     override suspend fun getAllFilms(): List<Films> {
         return try {
-            val response = apiService.getFilms(apiKey)
+            val response = apiService.getFilms(apiKey, limit = 50)
             processFilmResponse(response.docs)
         } catch (e: Exception) {
             Log.e("API_ERROR", "Error: ${e.message}")
@@ -41,7 +42,7 @@ class RepositoryImpl @Inject constructor(
                 apiKey = apiKey,
                 sortField = "rating.kp",
                 sortType = "-1",
-                limit = 20
+                limit = 50
             )
             processFilmResponse(response.docs)
         } catch (e: Exception) {
@@ -55,7 +56,7 @@ class RepositoryImpl @Inject constructor(
                 apiKey = apiKey,
                 sortField = "votes.kp",
                 sortType = "-1",
-                limit = 20
+                limit = 50
             )
             processFilmResponse(response.docs)
         } catch (e: Exception) {
@@ -69,7 +70,7 @@ class RepositoryImpl @Inject constructor(
                 apiKey = apiKey,
                 sortField = "premiere.world", // Используем поле премьеры
                 sortType = "-1", // Сортировка по убыванию (новые сначала)
-                limit = 20
+                limit = 50
             )
             processFilmResponse(response.docs)
         } catch (e: Exception) {
@@ -93,6 +94,23 @@ class RepositoryImpl @Inject constructor(
                 rating = rating,
                 year = filmDto.year ?: 0
             )
+        }
+    }
+    override suspend fun getFilmDetails(id: Long): Films {
+        return try {
+            val response = apiService.getFilmById(apiKey, id)
+            val imdbRating = response.rating?.imdb ?: 0.0
+            Films(
+                id = response.id,
+                name = response.name ?: "No name",
+                description = response.description ?: "No description",
+                poster = response.poster?.url ?: "",
+                rating = if (imdbRating == 0.0) generateRandomRating() else imdbRating,
+                year = response.year ?: 0,
+                isFavorite = filmDao.isFavorite(response.id)
+            )
+        } catch (e: Exception) {
+            throw Exception("Failed to load film details: $e")
         }
     }
 

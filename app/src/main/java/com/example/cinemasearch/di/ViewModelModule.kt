@@ -3,6 +3,7 @@ package com.example.cinemasearch.di
 import androidx.lifecycle.ViewModel
 import com.example.cinemasearch.data.repository.RepositoryImpl
 import com.example.cinemasearch.domain.Repository
+import com.example.cinemasearch.presintation.viewModelPackage.detailsViewModelPack.DetailsViewModel
 import com.example.cinemasearch.presintation.viewModelPackage.favoritesScreenViewModel.FavoritesViewModel
 import com.example.cinemasearch.presintation.viewModelPackage.mainScreenViewModel.SearchFilmsViewModel
 import dagger.Binds
@@ -27,6 +28,10 @@ abstract class ViewModelModule {
     @ViewModelKey(SearchFilmsViewModel::class)
     abstract fun bindSearchFilmsViewModel(viewModel: SearchFilmsViewModel): ViewModel
 
+    @Binds
+    @IntoMap
+    @ViewModelKey(SearchFilmsViewModel::class)
+    abstract fun bindDetailsViewModel(viewModel: DetailsViewModel): ViewModel
 
     @MustBeDocumented
     @Target(AnnotationTarget.FUNCTION)

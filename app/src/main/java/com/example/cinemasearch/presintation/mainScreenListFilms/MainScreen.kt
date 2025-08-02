@@ -1,5 +1,6 @@
 package com.example.cinemasearch.presintation.mainScreenListFilms
 
+import android.R.attr.type
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -20,13 +21,17 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.example.cinemasearch.presintation.detailsScreenPackage.DetailsScreen
 import com.example.cinemasearch.presintation.favoriteScreenPackage.FavoritesScreen
 import com.example.cinemasearch.presintation.menuFilmsPackage.DrawerContent
 import com.example.cinemasearch.presintation.searchPackage.CategoryChips
 import com.example.cinemasearch.presintation.searchPackage.SearchTopBar
+import com.example.cinemasearch.presintation.viewModelPackage.detailsViewModelPack.DetailsViewModel
 import com.example.cinemasearch.presintation.viewModelPackage.favoritesScreenViewModel.FavoritesViewModel
 import com.example.cinemasearch.presintation.viewModelPackage.mainScreenViewModel.SearchFilmsViewModel
 import kotlinx.coroutines.delay
@@ -35,7 +40,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun MainScreen(
     viewModel: SearchFilmsViewModel,
-    favoritesViewModel: FavoritesViewModel
+    favoritesViewModel: FavoritesViewModel,
+    detailsViewModel: DetailsViewModel
 ) {
     // 1. Navigation and UI state
     val navController = rememberNavController()
@@ -142,7 +148,8 @@ fun MainScreen(
                                         favoritesViewModel.addToFavorites(film)
                                     }
                                 },
-                                onFilmClick = { },
+                                onFilmClick = { filmId ->
+                                    navController.navigate("details/$filmId")},
                                 modifier = Modifier.fillMaxSize()
                             )
                         }
@@ -156,6 +163,17 @@ fun MainScreen(
                     FavoritesScreen(
                         favoritesViewModel = favoritesViewModel,
                         modifier = Modifier.fillMaxSize()
+                    )
+                }
+                composable(
+                    route = "details/{filmId}",
+                    arguments = listOf(navArgument("filmId") { type = NavType.LongType })
+                ) { backStackEntry ->
+                    val filmId = backStackEntry.arguments?.getLong("filmId") ?: 0L
+                    DetailsScreen(
+                        filmId = filmId,
+                        viewModel = detailsViewModel,
+                        onBackClick = { navController.popBackStack() }
                     )
                 }
                 composable("settings") {

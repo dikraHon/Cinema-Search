@@ -85,4 +85,6 @@ dependencies {
 
     implementation("androidx.navigation:navigation-compose:2.9.3")
 
+    implementation("com.google.accompanist:accompanist-flowlayout:0.32.0")
+
 }

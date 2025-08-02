@@ -17,6 +17,8 @@ interface Repository {
 
     suspend fun searchFilms(query: String): List<Films>
 
-   // suspend fun getFilmsPage(page: Int): List<Films>
+    suspend fun getFilmDetails(id: Long): Films
+//
+//    suspend fun toggleFavorite(filmId: Long): Boolean
 
 }

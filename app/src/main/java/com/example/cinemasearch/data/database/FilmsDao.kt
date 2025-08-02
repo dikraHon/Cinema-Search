@@ -21,5 +21,10 @@ interface FilmsDao {
     @Query("DELETE FROM films WHERE id = :filmId AND isFavorite = 1")
     suspend fun deleteFavoriteFilms(filmId: Long)
 
+    @Query("SELECT EXISTS(SELECT * FROM films WHERE id = :filmId AND isFavorite = 1)")
+    suspend fun isFavorite(filmId: Long): Boolean
+
+    @Query("SELECT * FROM films WHERE id = :id")
+    suspend fun getFilmById(id: Long): Films?
 
 }
