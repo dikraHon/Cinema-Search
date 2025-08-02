@@ -29,6 +29,7 @@ fun FilmsList(
     isFavoriteList: List<Long>,
     onFavoriteClick: (Films) -> Unit,
     onFilmClick: (Long) -> Unit,
+    onCollectionClick: ((Films) -> Unit)? = null, // Новый параметр
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
@@ -52,7 +53,9 @@ fun FilmsList(
                     film = film,
                     isFavorite = isFavoriteList.contains(film.id),
                     onFilmClick = { onFilmClick(film.id) },
-                    onFavoriteClick = { onFavoriteClick(film) }
+                    onFavoriteClick = { onFavoriteClick(film) },
+                    onCollectionClick = onCollectionClick?.let { { it(film) } }
+
                 )
             }
         }

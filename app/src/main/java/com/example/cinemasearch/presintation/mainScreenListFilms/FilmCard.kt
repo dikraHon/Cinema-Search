@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Card
@@ -40,6 +41,7 @@ fun FilmCard(
     isFavorite: Boolean,
     onFilmClick: () -> Unit,
     onFavoriteClick: () -> Unit,
+    onCollectionClick: (() -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -133,16 +135,28 @@ fun FilmCard(
                     )
                 }
 
-                // Кнопка "Избранное"
-                IconButton(
-                    onClick = onFavoriteClick,
-                    modifier = Modifier.align(Alignment.End)
+                Column(
+                    modifier = Modifier.padding(8.dp)
                 ) {
-                    Icon(
-                        imageVector = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                        contentDescription = "Favorite",
-                        tint = if (isFavorite) Color.Red else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-                    )
+                    IconButton(onClick = onFavoriteClick) {
+                        Icon(
+                            imageVector = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                            contentDescription = "Favorite",
+                            tint = if (isFavorite) Color.Red else MaterialTheme.colorScheme.onSurface.copy(
+                                alpha = 0.6f
+                            )
+                        )
+                    }
+
+                    if (onCollectionClick != null) {
+                        IconButton(onClick = { onCollectionClick() }) {
+                            Icon(
+                                imageVector = Icons.Default.Add,
+                                contentDescription = "Add to collection",
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                    }
                 }
             }
         }

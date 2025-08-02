@@ -27,4 +27,12 @@ interface FilmsDao {
     @Query("SELECT * FROM films WHERE id = :id")
     suspend fun getFilmById(id: Long): Films?
 
+    @Query("UPDATE films SET collections = :collections WHERE id = :filmId")
+    suspend fun updateFilmCollections(filmId: Long, collections: String)
+
+    @Query("""
+        SELECT * FROM films 
+        WHERE ',' || collections || ',' LIKE '%,' || :collectionName || ',%'
+    """)
+    suspend fun getFilmsInCollection(collectionName: String): List<Films>
 }
