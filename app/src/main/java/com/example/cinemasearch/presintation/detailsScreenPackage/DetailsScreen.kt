@@ -22,20 +22,20 @@ import com.example.cinemasearch.presintation.viewModelPackage.detailsViewModelPa
 @Composable
 fun DetailsScreen(
     filmId: Long,
-    viewModel: DetailsViewModel,
+    detailsViewModel: DetailsViewModel,
     onBackClick: () -> Unit
 ) {
-    val film by viewModel.film.collectAsStateWithLifecycle()
-    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
+    val films by detailsViewModel.film.collectAsStateWithLifecycle()
+    val isLoading by detailsViewModel.isLoading.collectAsStateWithLifecycle()
 
     LaunchedEffect(filmId) {
-        viewModel.loadFilmDetails(filmId)
+        detailsViewModel.loadFilmDetails(filmId)
     }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(film?.name ?: "Details") },
+                title = { Text(films?.name ?: "Details") },
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
@@ -46,8 +46,8 @@ fun DetailsScreen(
     ) { padding ->
         if (isLoading) {
             CircularProgressIndicator(modifier = Modifier.fillMaxSize())
-        } else if (film != null) {
-            FilmDetailsContent(film = film!!, modifier = Modifier.padding(padding))
+        } else if (films != null) {
+            FilmDetailsContent(film = films!!, modifier = Modifier.padding(padding))
         }
     }
 }

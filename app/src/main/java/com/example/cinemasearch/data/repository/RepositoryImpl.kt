@@ -5,6 +5,8 @@ import com.example.cinemasearch.data.database.AppDatabase
 import com.example.cinemasearch.di.ApiService
 import com.example.cinemasearch.data.remote.ApiConfig
 import com.example.cinemasearch.data.remote.CinemaSearchApi
+import com.example.cinemasearch.domain.CollectionFilms
+import com.example.cinemasearch.domain.FilmCollectionCrossRef
 import com.example.cinemasearch.domain.Films
 import com.example.cinemasearch.domain.Repository
 import javax.inject.Inject
@@ -16,6 +18,7 @@ class RepositoryImpl @Inject constructor(
 ) : Repository {
     private val apiKey = ApiConfig.API_KEY
     private val filmDao = getDao.filmsDao()
+    private val collectionsDao = getDao.collectionsDao()
 
     override suspend fun getAllFilms(): List<Films> {
         return try {
@@ -68,8 +71,8 @@ class RepositoryImpl @Inject constructor(
         return try {
             val response = apiService.getFilms(
                 apiKey = apiKey,
-                sortField = "premiere.world", // Используем поле премьеры
-                sortType = "-1", // Сортировка по убыванию (новые сначала)
+                sortField = "premiere.world",
+                sortType = "-1",
                 limit = 50
             )
             processFilmResponse(response.docs)
@@ -129,6 +132,31 @@ class RepositoryImpl @Inject constructor(
 
     private fun generateRandomRating(): Double {
         return (50..90).random() / 10.0
+    }
+
+    override suspend fun getAllCollections(): List<CollectionFilms> {
+        return getDao.collectionsDao().getAllCollections()
+    }
+
+    override suspend fun createCollection(name: String): Long {
+        return getDao.collectionsDao().insertCollection(CollectionFilms(name = name))
+    }
+
+    override suspend fun addFilmToCollection(filmId: Long, collectionId: Long) {
+        if (filmDao.checkFilmExists(filmId) == null) {
+            val filmFromApi = apiService.getFilmById(apiKey, filmId)
+            filmDao.insertFavoritesFilms(filmFromApi.toFilmEntity())
+        }
+        collectionsDao.insertFilmCollectionCrossRef(
+            FilmCollectionCrossRef(
+                filmId = filmId,
+                collectionId = collectionId
+            )
+        )
+    }
+
+    override suspend fun getFilmsInCollection(collectionId: Long): List<Films> {
+        return getDao.collectionsDao().getFilmsInCollection(collectionId)
     }
 
 }

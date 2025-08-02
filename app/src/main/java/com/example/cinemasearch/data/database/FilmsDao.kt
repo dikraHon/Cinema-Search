@@ -25,4 +25,9 @@ interface FilmsDao {
 
     @Query("SELECT * FROM films WHERE id = :id")
     suspend fun getFilmById(id: Long): Films?
+
+    @Query("SELECT id FROM films WHERE id = :filmId")
+    suspend fun checkFilmExists(filmId: Long): Long?
+
+
 }

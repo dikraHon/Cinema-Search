@@ -10,6 +10,7 @@ import com.example.cinemasearch.presintation.viewModelPackage.FactoryViewModel
 import com.example.cinemasearch.presintation.viewModelPackage.detailsViewModelPack.DetailsViewModel
 import com.example.cinemasearch.presintation.viewModelPackage.favoritesScreenViewModel.FavoritesViewModel
 import com.example.cinemasearch.presintation.viewModelPackage.mainScreenViewModel.SearchFilmsViewModel
+import com.example.cinemasearch.presintation.viewModelPackage.selectionOfFilmsViewModel.CollectionsViewModel
 import com.example.cinemasearch.ui.theme.CinemaSearchTheme
 
 import javax.inject.Inject
@@ -21,6 +22,8 @@ class MainActivity : ComponentActivity() {
     private val favoritesViewModel: FavoritesViewModel by viewModels() { viewModelFactory }
     private val detailsViewModel: DetailsViewModel by viewModels() { viewModelFactory }
 
+    private val collectionsViewModel: CollectionsViewModel by viewModels() { viewModelFactory }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as MyApp).appComponent.inject(this)
         super.onCreate(savedInstanceState)
@@ -31,6 +34,7 @@ class MainActivity : ComponentActivity() {
                     viewModel = viewModel,
                     favoritesViewModel = favoritesViewModel,
                     detailsViewModel = detailsViewModel,
+                    collectionsViewModel = collectionsViewModel
                 )
             }
         }

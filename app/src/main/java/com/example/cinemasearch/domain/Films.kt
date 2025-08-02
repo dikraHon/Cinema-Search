@@ -12,5 +12,6 @@ data class Films(
     val rating: Double?,
     val year: Int?,
     val isFavorite: Boolean = false,
-    val collections: String = ""
+    val collections: String = "",
+    val isInCollection: Boolean = false
 )

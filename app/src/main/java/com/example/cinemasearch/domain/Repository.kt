@@ -19,4 +19,9 @@ interface Repository {
 
     suspend fun getFilmDetails(id: Long): Films
 
+    suspend fun getAllCollections(): List<CollectionFilms>
+    suspend fun createCollection(name: String): Long
+    suspend fun addFilmToCollection(filmId: Long, collectionId: Long)
+    suspend fun getFilmsInCollection(collectionId: Long): List<Films>
+
 }

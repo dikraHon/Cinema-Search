@@ -24,7 +24,8 @@ fun FavoritesScreen(
                     film = film,
                     isFavorite = true,
                     onFilmClick = {  },
-                    onFavoriteClick = { favoritesViewModel.removeFromFavorites(film.id) }
+                    onFavoriteClick = { favoritesViewModel.removeFromFavorites(film.id) },
+                    onAddToCollection = {}
                 )
             }
         }

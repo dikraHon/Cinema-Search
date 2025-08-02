@@ -25,6 +25,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.cinemasearch.presintation.collectionScreenPackage.CollectionDetailsScreen
+import com.example.cinemasearch.presintation.collectionScreenPackage.CollectionsScreen
+import com.example.cinemasearch.presintation.collectionScreenPackage.CreateCollectionScreen
 import com.example.cinemasearch.presintation.detailsScreenPackage.DetailsScreen
 import com.example.cinemasearch.presintation.favoriteScreenPackage.FavoritesScreen
 import com.example.cinemasearch.presintation.menuFilmsPackage.DrawerContent
@@ -33,6 +36,7 @@ import com.example.cinemasearch.presintation.searchPackage.SearchTopBar
 import com.example.cinemasearch.presintation.viewModelPackage.detailsViewModelPack.DetailsViewModel
 import com.example.cinemasearch.presintation.viewModelPackage.favoritesScreenViewModel.FavoritesViewModel
 import com.example.cinemasearch.presintation.viewModelPackage.mainScreenViewModel.SearchFilmsViewModel
+import com.example.cinemasearch.presintation.viewModelPackage.selectionOfFilmsViewModel.CollectionsViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -41,6 +45,7 @@ fun MainScreen(
     viewModel: SearchFilmsViewModel,
     favoritesViewModel: FavoritesViewModel,
     detailsViewModel: DetailsViewModel,
+    collectionsViewModel: CollectionsViewModel
 ) {
     // 1. Navigation and UI state
     val navController = rememberNavController()
@@ -113,8 +118,6 @@ fun MainScreen(
                         onMenuClick = { scope.launch { drawerState.open() } },
                         onFavoritesClick = { navController.navigate("favorites") }
                     )
-
-                    // Показываем чипы только на главном экране
                     if (navController.currentDestination?.route == "films") {
                         CategoryChips(
                             currentCategory = viewModel.getCurrentCategory(),
@@ -154,6 +157,7 @@ fun MainScreen(
                                 onFilmClick = { filmId ->
                                     navController.navigate("details/$filmId")
                                 },
+                                collectionsViewModel = collectionsViewModel,
                                 modifier = Modifier.fillMaxSize()
                             )
                         }
@@ -176,8 +180,38 @@ fun MainScreen(
                     val filmId = backStackEntry.arguments?.getLong("filmId") ?: 0L
                     DetailsScreen(
                         filmId = filmId,
-                        viewModel = detailsViewModel,
+                        detailsViewModel = detailsViewModel,
                         onBackClick = { navController.popBackStack() }
+                    )
+                }
+                composable("collections") {
+                    CollectionsScreen(
+                        viewModel = collectionsViewModel,
+                        onCreateCollection = {
+                            navController.navigate("createCollection")
+                        },
+                        onCollectionSelected = { collectionId ->
+                            navController.navigate("collection/$collectionId")
+                        }
+                    )
+                }
+
+                composable("createCollection") {
+                    CreateCollectionScreen(
+                        viewModel = collectionsViewModel,
+                        onBack = { navController.popBackStack() }
+                    )
+                }
+
+                composable(
+                    "collection/{collectionId}",
+                    arguments = listOf(navArgument("collectionId") { type = NavType.LongType })
+                ) { backStackEntry ->
+                    val collectionId = backStackEntry.arguments?.getLong("collectionId") ?: 0L
+                    CollectionDetailsScreen(
+                        collectionId = collectionId,
+                        collectionsViewModel = collectionsViewModel,
+                        onBack = { navController.popBackStack() }
                     )
                 }
                 composable("settings") {

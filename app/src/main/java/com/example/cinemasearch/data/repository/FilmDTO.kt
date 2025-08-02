@@ -1,5 +1,7 @@
 package com.example.cinemasearch.data.repository
 
+import com.example.cinemasearch.domain.Films
+
 data class FilmDTO(
     val id: Long,
     val name: String?,
@@ -19,4 +21,15 @@ data class FilmDTO(
         val await: Double?
     )
     data class GenreDTO(val name: String)
+}
+
+fun FilmDTO.toFilmEntity(): Films {
+    return Films(
+        id = this.id,
+        name = this.name ?: "No name",
+        description = this.description ?: "No description",
+        poster = this.poster?.url ?: "",
+        rating = this.rating?.imdb ?: 0.0,
+        year = this.year ?: 0
+    )
 }

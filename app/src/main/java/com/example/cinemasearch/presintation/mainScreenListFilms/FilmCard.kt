@@ -41,6 +41,7 @@ fun FilmCard(
     isFavorite: Boolean,
     onFilmClick: () -> Unit,
     onFavoriteClick: () -> Unit,
+    onAddToCollection: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -56,7 +57,6 @@ fun FilmCard(
                 .padding(16.dp),
             verticalAlignment = Alignment.Top
         ) {
-            // Постер (левая часть)
             Box(
                 modifier = Modifier
                     .width(100.dp)
@@ -80,14 +80,11 @@ fun FilmCard(
                     contentScale = ContentScale.Crop
                 )
             }
-
-            // Информация о фильме (правая часть)
             Column(
                 modifier = Modifier
                     .padding(start = 16.dp)
                     .weight(1f)
             ) {
-                // Название фильма
                 Text(
                     text = film.name ?: "No title",
                     style = MaterialTheme.typography.titleMedium,
@@ -95,8 +92,6 @@ fun FilmCard(
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.padding(bottom = 4.dp)
                 )
-
-                // Рейтинг
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.padding(bottom = 4.dp)
@@ -113,16 +108,12 @@ fun FilmCard(
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }
-
-                // Год выпуска
                 Text(
                     text = film.year?.toString() ?: "Year: N/A",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
-
-                // Описание (если есть)
                 film.description?.takeIf { it.isNotBlank() }?.let { description ->
                     Text(
                         text = description.take(100) + if (description.length > 100) "..." else "",
@@ -133,7 +124,6 @@ fun FilmCard(
                         modifier = Modifier.padding(bottom = 8.dp)
                     )
                 }
-
                 Column(
                     modifier = Modifier.padding(8.dp)
                 ) {
@@ -144,6 +134,13 @@ fun FilmCard(
                             tint = if (isFavorite) Color.Red else MaterialTheme.colorScheme.onSurface.copy(
                                 alpha = 0.6f
                             )
+                        )
+                    }
+                    IconButton(onClick = onAddToCollection) {
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = "Add to selection",
+                            tint = MaterialTheme.colorScheme.primary
                         )
                     }
                 }

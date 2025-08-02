@@ -6,6 +6,7 @@ import com.example.cinemasearch.domain.Repository
 import com.example.cinemasearch.presintation.viewModelPackage.detailsViewModelPack.DetailsViewModel
 import com.example.cinemasearch.presintation.viewModelPackage.favoritesScreenViewModel.FavoritesViewModel
 import com.example.cinemasearch.presintation.viewModelPackage.mainScreenViewModel.SearchFilmsViewModel
+import com.example.cinemasearch.presintation.viewModelPackage.selectionOfFilmsViewModel.CollectionsViewModel
 import dagger.Binds
 import dagger.MapKey
 import dagger.Module
@@ -32,6 +33,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SearchFilmsViewModel::class)
     abstract fun bindDetailsViewModel(viewModel: DetailsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SearchFilmsViewModel::class)
+    abstract fun bindCollectionsViewModel(viewModel: CollectionsViewModel): ViewModel
 
     @MustBeDocumented
     @Target(AnnotationTarget.FUNCTION)
