@@ -41,7 +41,6 @@ fun FilmCard(
     isFavorite: Boolean,
     onFilmClick: () -> Unit,
     onFavoriteClick: () -> Unit,
-    onCollectionClick: (() -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -146,16 +145,6 @@ fun FilmCard(
                                 alpha = 0.6f
                             )
                         )
-                    }
-
-                    if (onCollectionClick != null) {
-                        IconButton(onClick = { onCollectionClick() }) {
-                            Icon(
-                                imageVector = Icons.Default.Add,
-                                contentDescription = "Add to collection",
-                                tint = MaterialTheme.colorScheme.primary
-                            )
-                        }
                     }
                 }
             }

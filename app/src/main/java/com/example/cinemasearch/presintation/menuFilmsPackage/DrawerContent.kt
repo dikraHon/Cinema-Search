@@ -1,11 +1,9 @@
 package com.example.cinemasearch.presintation.menuFilmsPackage
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -21,8 +19,6 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun DrawerContent(
     onItemSelected: (String) -> Unit,
-    collections: List<String>,
-    onCreateCollection: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -53,30 +49,7 @@ fun DrawerContent(
                     style = MaterialTheme.typography.titleMedium,
                     modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
                 )
-                IconButton(
-                    onClick = onCreateCollection,
-                    modifier = Modifier.padding(start = 8.dp)
-                ) {
-                    Icon(Icons.Default.Add, contentDescription = "Add collection")
-                }
             }
-
-            if (collections.isEmpty()) {
-                Text(
-                    text = "No collections yet",
-                    style = MaterialTheme.typography.bodySmall,
-                    modifier = Modifier.padding(start = 16.dp)
-                )
-            } else {
-                collections.forEach { collection ->
-                    DrawerItem(
-                        text = collection,
-                        route = "collection/$collection",
-                        onItemSelected = onItemSelected
-                    )
-                }
-            }
-
             DrawerItem(
                 text = "Settings",
                 route = "settings",

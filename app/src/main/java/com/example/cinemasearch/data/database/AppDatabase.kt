@@ -8,7 +8,7 @@ import com.example.cinemasearch.domain.Films
 
 @Database(
     entities = [Films::class],
-    version = 4,  // Увеличьте на 1 от предыдущей версии
+    version = 6,  // Увеличьте на 1 от предыдущей версии
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {

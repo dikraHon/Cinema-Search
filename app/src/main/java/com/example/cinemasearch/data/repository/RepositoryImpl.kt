@@ -5,10 +5,10 @@ import com.example.cinemasearch.data.database.AppDatabase
 import com.example.cinemasearch.di.ApiService
 import com.example.cinemasearch.data.remote.ApiConfig
 import com.example.cinemasearch.data.remote.CinemaSearchApi
-import com.example.cinemasearch.domain.FilmDetails
 import com.example.cinemasearch.domain.Films
 import com.example.cinemasearch.domain.Repository
 import javax.inject.Inject
+import kotlin.collections.emptyList
 
 class RepositoryImpl @Inject constructor(
     @ApiService private val apiService: CinemaSearchApi,
@@ -114,36 +114,6 @@ class RepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun createCollection(name: String) {
-        // Просто сохраняем название, коллекции будут появляться при добавлении фильмов
-    }
-
-    override suspend fun getAllCollections(): List<String> {
-        return filmDao.getAllFilms()
-            .flatMap { it.collections.split(",").map { it.trim() } }
-            .filter { it.isNotEmpty() }
-            .distinct()
-    }
-
-    override suspend fun addFilmToCollection(filmId: Long, collectionName: String) {
-        val film = filmDao.getFilmById(filmId) ?: return
-        val currentCollections = film.collections.split(",")
-            .map { it.trim() }
-            .filter { it.isNotEmpty() }
-            .toMutableList()
-
-        if (!currentCollections.contains(collectionName)) {
-            currentCollections.add(collectionName)
-            filmDao.updateFilmCollections(
-                filmId,
-                currentCollections.joinToString(",")
-            )
-        }
-    }
-
-    override suspend fun getCollection(collectionName: String): List<Films> {
-        return filmDao.getFilmsInCollection(collectionName)
-    }
 
     override suspend fun getFavoritesFilms(): List<Films> {
         return filmDao.getFavoriteFilms()

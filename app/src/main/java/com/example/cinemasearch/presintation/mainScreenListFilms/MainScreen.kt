@@ -1,12 +1,8 @@
 package com.example.cinemasearch.presintation.mainScreenListFilms
 
-import android.R.attr.name
-import android.R.attr.type
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalNavigationDrawer
@@ -14,12 +10,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,9 +25,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.cinemasearch.domain.Films
-import com.example.cinemasearch.presintation.collectionScreenPackage.AddToCollectionDialog
-import com.example.cinemasearch.presintation.collectionScreenPackage.CollectionScreen
 import com.example.cinemasearch.presintation.detailsScreenPackage.DetailsScreen
 import com.example.cinemasearch.presintation.favoriteScreenPackage.FavoritesScreen
 import com.example.cinemasearch.presintation.menuFilmsPackage.DrawerContent
@@ -43,7 +33,6 @@ import com.example.cinemasearch.presintation.searchPackage.SearchTopBar
 import com.example.cinemasearch.presintation.viewModelPackage.detailsViewModelPack.DetailsViewModel
 import com.example.cinemasearch.presintation.viewModelPackage.favoritesScreenViewModel.FavoritesViewModel
 import com.example.cinemasearch.presintation.viewModelPackage.mainScreenViewModel.SearchFilmsViewModel
-import com.example.cinemasearch.presintation.viewModelPackage.selectionOfFilmsViewModel.CollectionsViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -52,7 +41,6 @@ fun MainScreen(
     viewModel: SearchFilmsViewModel,
     favoritesViewModel: FavoritesViewModel,
     detailsViewModel: DetailsViewModel,
-    collectionsViewModel: CollectionsViewModel
 ) {
     // 1. Navigation and UI state
     val navController = rememberNavController()
@@ -68,22 +56,6 @@ fun MainScreen(
     //Loading Data
     val state = viewModel.state.collectAsStateWithLifecycle().value
 
-    var showCreateCollectionDialog by remember { mutableStateOf(false) }
-    val collections by collectionsViewModel.collections.collectAsState()
-    var showCollectionDialog by remember { mutableStateOf<Long?>(null) }
-    if (showCollectionDialog != null) {
-        AddToCollectionDialog(
-            collections = collections,
-            onDismiss = { showCollectionDialog = null },
-            onAddToExisting = { collectionName ->
-                collectionsViewModel.addToCollection(showCollectionDialog!!, collectionName)
-            },
-            onCreateNew = { collectionName ->
-                collectionsViewModel.createCollection(collectionName)
-                collectionsViewModel.addToCollection(showCollectionDialog!!, collectionName)
-            }
-        )
-    }
     // 4. Effects
     // Search debounce (1 sec delay)
     LaunchedEffect(searchQuery) {
@@ -129,8 +101,6 @@ fun MainScreen(
                         launchSingleTop = true
                     }
                 },
-                collections = collections,
-                onCreateCollection = { showCreateCollectionDialog = true }
             )
         }
     ) {
@@ -169,6 +139,7 @@ fun MainScreen(
                                 modifier = Modifier.fillMaxSize()
                             )
                         }
+
                         state.films.isNotEmpty() -> {
                             FilmsList(
                                 films = state.films,
@@ -181,9 +152,7 @@ fun MainScreen(
                                     }
                                 },
                                 onFilmClick = { filmId ->
-                                    navController.navigate("details/$filmId")},
-                                onCollectionClick = { film ->
-                                    showCollectionDialog = film.id // Теперь принимает Films, но использует только id
+                                    navController.navigate("details/$filmId")
                                 },
                                 modifier = Modifier.fillMaxSize()
                             )
@@ -211,58 +180,10 @@ fun MainScreen(
                         onBackClick = { navController.popBackStack() }
                     )
                 }
-                composable(
-                    route = "collection/{name}",
-                    arguments = listOf(navArgument("name") { type = NavType.StringType })
-                ) { backStackEntry ->
-                    val name = backStackEntry.arguments?.getString("name") ?: ""
-                    CollectionScreen(
-                        collectionName = name,
-                        viewModel = collectionsViewModel,
-                        favoritesViewModel = favoritesViewModel,
-                        onFilmClick = { filmId ->
-                            navController.navigate("details/$filmId")
-                        },
-                        onBackClick = { navController.popBackStack() }
-                    )
-                }
                 composable("settings") {
                     Text("Settings Screen")
                 }
             }
         }
     }
-    if (showCreateCollectionDialog) {
-        AlertDialog(
-            onDismissRequest = { showCreateCollectionDialog = false },
-            title = { Text("New Collection") },
-            text = {
-                var name by remember { mutableStateOf("") }
-                TextField(
-                    value = name,
-                    onValueChange = { name = it },
-                    label = { Text("Collection name") }
-                )
-            },
-            confirmButton = {
-                var name by remember { mutableStateOf("") }
-                Button(
-                    onClick = {
-                        collectionsViewModel.createCollection(name)
-                        showCreateCollectionDialog = false
-                    }
-                ) {
-                    Text("Create")
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { showCreateCollectionDialog = false }) {
-                    Text("Cancel")
-                }
-            }
-        )
-    }
 }
-
-
-
