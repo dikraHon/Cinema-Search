@@ -13,14 +13,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.cinemasearch.domain.Films
+import com.example.cinemasearch.domain.modelData.Films
 
 @Composable
 fun FilmDetailsContent(film: Films, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = 16.dp) // Только горизонтальные отступы
+            .padding(horizontal = 16.dp)
     ) {
         AsyncImage(
             model = film.poster,
@@ -28,15 +28,15 @@ fun FilmDetailsContent(film: Films, modifier: Modifier = Modifier) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .padding(top = 0.dp) // Нет отступа сверху
+                .padding(top = 0.dp)
         )
 
-        Spacer(modifier = Modifier.height(8.dp)) // Уменьшенный отступ после постера
+        Spacer(modifier = Modifier.height(8.dp))
 
         Text(
             text = film.name ?: "No title",
             style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.padding(bottom = 4.dp) // Минимальный отступ
+            modifier = Modifier.padding(bottom = 4.dp)
         )
 
         Text(

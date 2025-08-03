@@ -1,6 +1,6 @@
-package com.example.cinemasearch.data.repository
+package com.example.cinemasearch.data.repositoryImplementation.mappersPackage
 
-import com.example.cinemasearch.domain.Films
+import com.example.cinemasearch.domain.modelData.Films
 
 data class FilmDTO(
     val id: Long,

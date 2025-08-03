@@ -2,15 +2,15 @@ package com.example.cinemasearch.presintation.viewModelPackage.detailsViewModelP
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cinemasearch.domain.Films
-import com.example.cinemasearch.domain.Repository
+import com.example.cinemasearch.domain.modelData.Films
+import com.example.cinemasearch.domain.repositoryPackage.FilmRepository
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class DetailsViewModel @Inject constructor(
-    private val repository: Repository
+    private val filmRepository: FilmRepository,
 ) : ViewModel() {
 
     private val _film = MutableStateFlow<Films?>(null)
@@ -23,9 +23,9 @@ class DetailsViewModel @Inject constructor(
         viewModelScope.launch {
             _isLoading.value = true
             try {
-                _film.value = repository.getFilmDetails(id)
+                _film.value = filmRepository.getFilmDetails(id)
             } catch (e: Exception) {
-                // Обработка ошибки
+                e.message
             } finally {
                 _isLoading.value = false
             }

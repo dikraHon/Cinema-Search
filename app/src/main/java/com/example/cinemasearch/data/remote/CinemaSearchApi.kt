@@ -1,12 +1,9 @@
 package com.example.cinemasearch.data.remote
 
-import com.example.cinemasearch.data.repository.FilmDTO
-import com.example.cinemasearch.data.repository.MovieResponse
-import com.example.cinemasearch.domain.Films
-import retrofit2.http.Body
+import com.example.cinemasearch.data.repositoryImplementation.mappersPackage.FilmDTO
+import com.example.cinemasearch.data.repositoryImplementation.mappersPackage.MovieResponse
 import retrofit2.http.GET
 import retrofit2.http.Header
-import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 

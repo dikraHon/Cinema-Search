@@ -1,4 +1,4 @@
-package com.example.cinemasearch.di
+package com.example.cinemasearch.di.qualifier
 
 import javax.inject.Qualifier
 

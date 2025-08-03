@@ -1,18 +1,17 @@
 package com.example.cinemasearch.presintation.viewModelPackage.selectionOfFilmsViewModel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cinemasearch.domain.CollectionFilms
-import com.example.cinemasearch.domain.Films
-import com.example.cinemasearch.domain.Repository
+import com.example.cinemasearch.domain.modelData.CollectionFilms
+import com.example.cinemasearch.domain.modelData.Films
+import com.example.cinemasearch.domain.repositoryPackage.CollectionRepository
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class CollectionsViewModel @Inject constructor(
-    private val repository: Repository
+    private val collectionRepository: CollectionRepository
 ) : ViewModel() {
     private val _collections = MutableStateFlow<List<CollectionFilms>>(emptyList())
     val collections: StateFlow<List<CollectionFilms>> = _collections
@@ -26,24 +25,24 @@ class CollectionsViewModel @Inject constructor(
     }
     fun loadFilmsInCollection(collectionId: Long) {
         viewModelScope.launch {
-            _filmsInCollection.value = repository.getFilmsInCollection(collectionId)
+            _filmsInCollection.value = collectionRepository.getFilmsInCollection(collectionId)
         }
     }
     fun addSelectedFilmToCollection(collectionId: Long) {
         viewModelScope.launch {
-            repository.addFilmToCollection(selectedFilmId.value!!, collectionId)
-            _filmsInCollection.value = repository.getFilmsInCollection(collectionId)
+            collectionRepository.addFilmToCollection(selectedFilmId.value!!, collectionId)
+            _filmsInCollection.value = collectionRepository.getFilmsInCollection(collectionId)
         }
     }
     fun refreshCollections() {
         viewModelScope.launch {
-            _collections.value = repository.getAllCollections()
+            _collections.value = collectionRepository.getAllCollections()
         }
     }
 
     fun loadCollections() {
         viewModelScope.launch {
-            _collections.value = repository.getAllCollections()
+            _collections.value = collectionRepository.getAllCollections()
         }
     }
 
@@ -53,7 +52,7 @@ class CollectionsViewModel @Inject constructor(
 
     fun createCollection(name: String) {
         viewModelScope.launch {
-            repository.createCollection(name)
+            collectionRepository.createCollection(name)
             loadCollections()
         }
     }

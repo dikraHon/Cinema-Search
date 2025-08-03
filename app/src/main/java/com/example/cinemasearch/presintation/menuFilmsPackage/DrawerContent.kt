@@ -40,7 +40,7 @@ fun DrawerContent(
                 text = "Collections",
                 route = "collections",
                 onItemSelected = onItemSelected
-            ) // Добавляем новый пункт
+            )
             DrawerItem(
                 text = "Settings",
                 route = "settings",

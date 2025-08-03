@@ -1,11 +1,11 @@
-package com.example.cinemasearch.data.database
+package com.example.cinemasearch.data.database.daoPackage
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.example.cinemasearch.domain.CollectionFilms
-import com.example.cinemasearch.domain.FilmCollectionCrossRef
-import com.example.cinemasearch.domain.Films
+import com.example.cinemasearch.domain.modelData.CollectionFilms
+import com.example.cinemasearch.domain.modelData.FilmCollectionCrossRef
+import com.example.cinemasearch.domain.modelData.Films
 
 @Dao
 interface CollectionsDao {
@@ -16,9 +16,6 @@ interface CollectionsDao {
     @Query("SELECT * FROM collections")
     suspend fun getAllCollections(): List<CollectionFilms>
 
-    @Insert
-    suspend fun insertFilmToCollection(crossRef: FilmCollectionCrossRef)
-
     @Query("""
     SELECT * FROM films 
     WHERE id IN (
@@ -27,11 +24,4 @@ interface CollectionsDao {
     )
 """)
     suspend fun getFilmsInCollection(collectionId: Long): List<Films>
-    @Query("""
-    SELECT EXISTS(
-        SELECT 1 FROM film_collection_xref 
-        WHERE filmId = :filmId AND collectionId = :collectionId
-    )
-""")
-    suspend fun doesFilmExistInCollection(filmId: Long, collectionId: Long): Boolean
 }

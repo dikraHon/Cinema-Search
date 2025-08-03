@@ -14,8 +14,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.cinemasearch.presintation.viewModelPackage.mainScreenViewModel.FilmCategory
-import com.example.cinemasearch.ui.theme.CinemaSearchTheme
-
 @Composable
 fun CategoryChips(
     currentCategory: FilmCategory,

@@ -4,9 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.cinemasearch.domain.CollectionFilms
-import com.example.cinemasearch.domain.FilmCollectionCrossRef
-import com.example.cinemasearch.domain.Films
+import com.example.cinemasearch.data.database.daoPackage.CollectionsDao
+import com.example.cinemasearch.data.database.daoPackage.FavoritesDao
+import com.example.cinemasearch.data.database.daoPackage.FilmsDao
+import com.example.cinemasearch.domain.modelData.CollectionFilms
+import com.example.cinemasearch.domain.modelData.FilmCollectionCrossRef
+import com.example.cinemasearch.domain.modelData.Films
 
 @Database(
     entities = [
@@ -21,6 +24,8 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun filmsDao(): FilmsDao
     abstract fun collectionsDao(): CollectionsDao
+
+    abstract fun favoritesDao(): FavoritesDao
 
     companion object {
         @Volatile

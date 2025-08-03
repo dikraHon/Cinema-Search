@@ -39,7 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import coil.compose.AsyncImage
 import com.example.cinemasearch.R
-import com.example.cinemasearch.domain.Films
+import com.example.cinemasearch.domain.modelData.Films
 
 @Composable
 fun FilmCard(
@@ -131,7 +131,7 @@ fun FilmCard(
                         modifier = Modifier.padding(bottom = 8.dp)
                     )
                 }
-                Column(
+                Row (
                     modifier = Modifier.padding(8.dp)
                 ) {
                     IconButton(onClick = onFavoriteClick) {
@@ -151,20 +151,20 @@ fun FilmCard(
                         )
                     }
                     IconButton(onClick = {
-                        val shareText = "Фильм: ${film.name ?: "Без названия"}\nРейтинг: ${"%.1f".format(film.rating)}\nГод: ${film.year}"
+                        val shareText = "Film: ${film.name ?: "Not have name"}\nRating: ${"%.1f".format(film.rating)}\nГод: ${film.year}"
                         val intent = Intent(Intent.ACTION_SEND).apply {
                             type = "text/plain"
                             putExtra(Intent.EXTRA_TEXT, shareText)
                         }
                         ContextCompat.startActivity(
                             context,
-                            Intent.createChooser(intent, "Поделиться фильмом"),
+                            Intent.createChooser(intent, "Shared film"),
                             null
                         )
                     }) {
                         Icon(
                             imageVector = Icons.Default.Share,
-                            contentDescription = "Поделиться",
+                            contentDescription = "Shared",
                             tint = MaterialTheme.colorScheme.primary
                         )
                     }

@@ -1,6 +1,6 @@
 package com.example.cinemasearch.presintation.viewModelPackage.mainScreenViewModel
 
-import com.example.cinemasearch.domain.Films
+import com.example.cinemasearch.domain.modelData.Films
 
 data class FilmsState(
     val films: List<Films> = emptyList(),

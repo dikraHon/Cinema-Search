@@ -1,8 +1,6 @@
-package com.example.cinemasearch.di
+package com.example.cinemasearch.di.module
 
 import androidx.lifecycle.ViewModel
-import com.example.cinemasearch.data.repository.RepositoryImpl
-import com.example.cinemasearch.domain.Repository
 import com.example.cinemasearch.presintation.viewModelPackage.detailsViewModelPack.DetailsViewModel
 import com.example.cinemasearch.presintation.viewModelPackage.favoritesScreenViewModel.FavoritesViewModel
 import com.example.cinemasearch.presintation.viewModelPackage.mainScreenViewModel.SearchFilmsViewModel
@@ -13,11 +11,9 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 import kotlin.reflect.KClass
 
+@Suppress("unused")
 @Module
 abstract class ViewModelModule {
-    @Binds
-    abstract fun bindRepository(impl: RepositoryImpl): Repository
-
     @Binds
     @IntoMap
     @ViewModelKey(FavoritesViewModel::class)
@@ -31,12 +27,12 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(SearchFilmsViewModel::class)
+    @ViewModelKey(DetailsViewModel::class)
     abstract fun bindDetailsViewModel(viewModel: DetailsViewModel): ViewModel
 
     @Binds
     @IntoMap
-    @ViewModelKey(SearchFilmsViewModel::class)
+    @ViewModelKey(CollectionsViewModel::class)
     abstract fun bindCollectionsViewModel(viewModel: CollectionsViewModel): ViewModel
 
     @MustBeDocumented

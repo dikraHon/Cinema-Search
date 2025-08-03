@@ -14,15 +14,14 @@ import com.example.cinemasearch.presintation.viewModelPackage.selectionOfFilmsVi
 import com.example.cinemasearch.ui.theme.CinemaSearchTheme
 
 import javax.inject.Inject
-
 class MainActivity : ComponentActivity() {
     @Inject
     lateinit var viewModelFactory: FactoryViewModel
-    private val viewModel: SearchFilmsViewModel by viewModels() { viewModelFactory }
-    private val favoritesViewModel: FavoritesViewModel by viewModels() { viewModelFactory }
-    private val detailsViewModel: DetailsViewModel by viewModels() { viewModelFactory }
+    private val viewModel: SearchFilmsViewModel by viewModels { viewModelFactory }
+    private val favoritesViewModel: FavoritesViewModel by viewModels { viewModelFactory }
+    private val detailsViewModel: DetailsViewModel by viewModels { viewModelFactory }
 
-    private val collectionsViewModel: CollectionsViewModel by viewModels() { viewModelFactory }
+    private val collectionsViewModel: CollectionsViewModel by viewModels { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as MyApp).appComponent.inject(this)

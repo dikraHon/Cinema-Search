@@ -53,21 +53,21 @@ fun DetailsScreen(
                 actions = {
                     films?.let {
                         IconButton(onClick = {
-                            val shareText = "Фильм: ${it.name ?: "Без названия"}\n" +
-                                    "Рейтинг: ${"%.1f".format(it.rating)}\n" +
-                                    "Год: ${it.year}\n" +
-                                    "Описание: ${it.description?.take(200) ?: "нет описания"}"
+                            val shareText = "Films: ${it.name ?: "Not have name"}\n" +
+                                    "Rating: ${"%.1f".format(it.rating)}\n" +
+                                    "Year: ${it.year}\n" +
+                                    "Description: ${it.description?.take(200) ?: "Not have Description"}"
                             val intent = Intent(Intent.ACTION_SEND).apply {
                                 type = "text/plain"
                                 putExtra(Intent.EXTRA_TEXT, shareText)
                             }
                             ContextCompat.startActivity(
                                 context,
-                                Intent.createChooser(intent, "Поделиться фильмом"),
+                                Intent.createChooser(intent, "Shared film"),
                                 null
                             )
                         }) {
-                            Icon(Icons.Default.Share, contentDescription = "Поделиться")
+                            Icon(Icons.Default.Share, contentDescription = "Shared")
                         }
                     }
                 }
@@ -81,7 +81,7 @@ fun DetailsScreen(
                     film = films!!,
                     modifier = Modifier
                         .padding(innerPadding)
-                        .padding(top = 0.dp) // Убираем верхний отступ полностью
+                        .padding(top = 0.dp)
                 )
             }
         }

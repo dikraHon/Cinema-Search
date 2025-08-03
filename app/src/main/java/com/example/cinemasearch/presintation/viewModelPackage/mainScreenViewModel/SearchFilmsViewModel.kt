@@ -1,17 +1,15 @@
 package com.example.cinemasearch.presintation.viewModelPackage.mainScreenViewModel
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cinemasearch.domain.Films
-import com.example.cinemasearch.domain.Repository
+import com.example.cinemasearch.domain.repositoryPackage.FilmRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 class SearchFilmsViewModel @Inject constructor(
-    private val repository: Repository
+    private val filmRepository: FilmRepository,
 ) : ViewModel() {
     private val _state = MutableStateFlow(FilmsState())
     val state = _state.asStateFlow()
@@ -24,10 +22,10 @@ class SearchFilmsViewModel @Inject constructor(
             _state.update { it.copy(isLoading = true) }
             try {
                 val films = when (category) {
-                    FilmCategory.POPULAR -> repository.getPopularFilms()
-                    FilmCategory.TOP_RATED -> repository.getTopRatedFilms()
-                    FilmCategory.NEW -> repository.getNewReleases()
-                    else -> repository.getAllFilms()
+                    FilmCategory.POPULAR -> filmRepository.getPopularFilms()
+                    FilmCategory.TOP_RATED -> filmRepository.getTopRatedFilms()
+                    FilmCategory.NEW -> filmRepository.getNewReleases()
+                    else -> filmRepository.getAllFilms()
                 }
                 _state.update {
                     it.copy(
@@ -51,7 +49,7 @@ class SearchFilmsViewModel @Inject constructor(
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
             try {
-                val films = repository.searchFilms(query)
+                val films = filmRepository.searchFilms(query)
                 _state.update {
                     it.copy(
                         films = films,

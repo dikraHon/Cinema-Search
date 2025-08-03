@@ -1,4 +1,4 @@
-package com.example.cinemasearch.domain
+package com.example.cinemasearch.domain.modelData
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
