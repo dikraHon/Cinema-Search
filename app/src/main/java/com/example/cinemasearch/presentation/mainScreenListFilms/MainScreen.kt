@@ -34,6 +34,7 @@ import com.example.cinemasearch.presentation.menuFilmsPackage.DrawerContent
 import com.example.cinemasearch.presentation.rememberStrings
 import com.example.cinemasearch.presentation.searchPackage.CategoryChips
 import com.example.cinemasearch.presentation.searchPackage.SearchTopBar
+import com.example.cinemasearch.presentation.settingsPackage.SettingsScreen
 import com.example.cinemasearch.presentation.viewModelPackage.detailsViewModelPack.DetailsViewModel
 import com.example.cinemasearch.presentation.viewModelPackage.favoritesScreenViewModel.FavoritesViewModel
 import com.example.cinemasearch.presentation.viewModelPackage.mainScreenViewModel.SearchFilmsViewModel
@@ -46,7 +47,7 @@ fun MainScreen(
     viewModel: SearchFilmsViewModel,
     favoritesViewModel: FavoritesViewModel,
     detailsViewModel: DetailsViewModel,
-    collectionsViewModel: CollectionsViewModel
+    collectionsViewModel: CollectionsViewModel,
 ) {
     // 1. Navigation and UI state
     val navController = rememberNavController()
@@ -97,6 +98,7 @@ fun MainScreen(
     }
 
     // 6. UI
+
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
@@ -107,7 +109,7 @@ fun MainScreen(
                         popUpTo(navController.graph.startDestinationId)
                         launchSingleTop = true
                     }
-                },
+                }
             )
         }
     ) {
@@ -217,7 +219,9 @@ fun MainScreen(
                     )
                 }
                 composable("settings") {
-                    Text(strings.settingsScreen)
+                    SettingsScreen(
+                        onBackClick = { navController.popBackStack() }
+                    )
                 }
             }
         }

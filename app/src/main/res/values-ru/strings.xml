@@ -35,4 +35,11 @@
     <string name="search_movie">Поиск фильмов…</string>
     <string name="menu">меню</string>
     <string name="free_token_expired">Увы, бесплатный токен закончился: ошибка 403!!!</string>
+    <string name="language">Язык</string>
+    <string name="english">Английский</string>
+    <string name="russian">Русский</string>
+    <string name="theme">Тема</string>
+    <string name="system_default">Системная</string>
+    <string name="light_theme">Светлая</string>
+    <string name="dark_theme">Тёмная</string>
 </resources>

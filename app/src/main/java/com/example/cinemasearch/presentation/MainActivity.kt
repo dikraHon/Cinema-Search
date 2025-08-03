@@ -1,11 +1,13 @@
 package com.example.cinemasearch.presentation
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import com.example.cinemasearch.di.MyApp
 import com.example.cinemasearch.presentation.mainScreenListFilms.MainScreen
+import com.example.cinemasearch.presentation.settingsPackage.LocalizationManager
 import com.example.cinemasearch.presentation.viewModelPackage.FactoryViewModel
 import com.example.cinemasearch.presentation.viewModelPackage.detailsViewModelPack.DetailsViewModel
 import com.example.cinemasearch.presentation.viewModelPackage.favoritesScreenViewModel.FavoritesViewModel
@@ -22,6 +24,11 @@ class MainActivity : ComponentActivity() {
     private val detailsViewModel: DetailsViewModel by viewModels { viewModelFactory }
 
     private val collectionsViewModel: CollectionsViewModel by viewModels { viewModelFactory }
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(LocalizationManager.setAppLocale(newBase,
+            LocalizationManager.getCurrentLanguage(newBase)))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as MyApp).appComponent.inject(this)

@@ -34,4 +34,11 @@
     <string name="search_movie">Search Movie…</string>
     <string name="menu">menu</string>
     <string name="free_token_expired">free token expired</string>
+    <string name="language">Language</string>
+    <string name="english">English</string>
+    <string name="russian">Russian</string>
+    <string name="theme">Theme</string>
+    <string name="system_default">System default</string>
+    <string name="light_theme">Light</string>
+    <string name="dark_theme">Dark</string>
 </resources>
