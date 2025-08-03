@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Cinema Search</string>
+    <string name="rating">Рейтинг</string>
+    <string name="rating_format">Рейтинг: %s</string>
+    <string name="year_na">Год: неизвестен</string>
+    <string name="favorite">Избранное</string>
+    <string name="add_to_collection">Добавить в подборку</string>
+    <string name="no_name">Без названия</string>
+    <string name="share_film">Поделиться фильмом</string>
+    <string name="film">Фильм:</string>
+    <string name="films">Фильмы:</string>
+    <string name="share">Поделиться</string>
+    <string name="no_title">нет имени</string>
+    <string name="no_poster">нет постера</string>
+    <string name="select_a_selection">Выберите вариант</string>
+    <string name="cancel">Отмена</string>
+    <string name="retry">обновить</string>
+    <string name="no_movie">Нет фильмов</string>
+    <string name="settings_screen">Экран настроек</string>
+    <string name="collection_details">Подробности коллекции</string>
+    <string name="back">назад</string>
+    <string name="movie_selection">Подборка фильмов</string>
+    <string name="shared_selection">Поделиться подборкой</string>
+    <string name="no_films_in_this_collection">Нет фильмов в коллекции</string>
+    <string name="create_new_collection">Создать новую коллекцию</string>
+    <string name="create">Создать</string>
+    <string name="collection_name">Имя коллекции</string>
+    <string name="details">Информация</string>
+    <string name="description">Описание</string>
+    <string name="not_have_description">Нет описания</string>
+    <string name="cinema_search">Кинопоиск</string>
+    <string name="collections">Подборки фильмов</string>
+    <string name="settings">Настройки</string>
+    <string name="search_movie">Поиск фильмов…</string>
+    <string name="menu">меню</string>
+    <string name="free_token_expired">Увы, бесплатный токен закончился: ошибка 403!!!</string>
+</resources>

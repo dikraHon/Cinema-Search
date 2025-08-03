@@ -1,3 +1,37 @@
 <resources>
     <string name="app_name">Cinema Search</string>
+    <string name="no_title">No title</string>
+    <string name="no_poster">No poster</string>
+    <string name="rating">Rating</string>
+    <string name="rating_format">Rating: %s</string>
+    <string name="year_na">Year: N/A</string>
+    <string name="favorite">Favorite</string>
+    <string name="add_to_collection">Add to collection</string>
+    <string name="no_name">No name</string>
+    <string name="share_film">Share film</string>
+    <string name="film">Film:</string>
+    <string name="share">Share</string>
+    <string name="select_a_selection">Select a selection</string>
+    <string name="cancel">Cancel</string>
+    <string name="retry">Retry</string>
+    <string name="no_movie">No movie</string>
+    <string name="settings_screen">Settings Screen</string>
+    <string name="collection_details">Collection Details</string>
+    <string name="back">Back</string>
+    <string name="movie_selection">Movie selection</string>
+    <string name="shared_selection">Shared selection</string>
+    <string name="no_films_in_this_collection">No films in this collection</string>
+    <string name="create_new_collection">Create New Collection</string>
+    <string name="create">Create</string>
+    <string name="collection_name">Collection name</string>
+    <string name="details">Details</string>
+    <string name="description">Description</string>
+    <string name="not_have_description">Not have description</string>
+    <string name="films">Films:</string>
+    <string name="cinema_search">Cinema Search</string>
+    <string name="collections">Collections</string>
+    <string name="settings">Settings</string>
+    <string name="search_movie">Search Movie…</string>
+    <string name="menu">menu</string>
+    <string name="free_token_expired">free token expired</string>
 </resources>

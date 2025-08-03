@@ -11,8 +11,8 @@ import com.example.cinemasearch.di.module.ViewModelModule
 import com.example.cinemasearch.domain.repositoryPackage.CollectionRepository
 import com.example.cinemasearch.domain.repositoryPackage.FavoriteRepository
 import com.example.cinemasearch.domain.repositoryPackage.FilmRepository
-import com.example.cinemasearch.presintation.MainActivity
-import com.example.cinemasearch.presintation.viewModelPackage.FactoryViewModel
+import com.example.cinemasearch.presentation.MainActivity
+import com.example.cinemasearch.presentation.viewModelPackage.FactoryViewModel
 import dagger.BindsInstance
 import dagger.Component
 import jakarta.inject.Singleton

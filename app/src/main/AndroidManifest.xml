@@ -19,7 +19,7 @@
         android:theme="@style/Theme.CinemaSearch">
 
         <activity
-            android:name=".presintation.MainActivity"
+            android:name=".presentation.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.CinemaSearch">
             <intent-filter>

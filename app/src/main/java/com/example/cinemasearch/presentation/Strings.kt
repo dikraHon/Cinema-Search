@@ -1,0 +1,39 @@
+package com.example.cinemasearch.presentation
+
+import android.R
+
+data class Strings(
+    val film: String,
+    val notHaveName: String,
+    val rating: String,
+    val year: String,
+    val shareFilm: String,
+    val noPoster: String,
+    val noTitle: String,
+    val favorites: String,
+    val addToCollection: String,
+    val selectSelection: String,
+    val cancel: String,
+    val retry: String,
+    val noMovie: String,
+    val settingsScreen: String,
+    val collectionsDetails: String,
+    val share: String,
+    val back: String,
+    val movieSelection: String,
+    val shareSelection: String,
+    val noFilmsInThisCollection: String,
+    val createNewCollection: String,
+    val create: String,
+    val collectName: String,
+    val description: String,
+    val notHaveDescription: String,
+    val details: String,
+    val films: String,
+    val cinemaSearch: String,
+    val collections: String,
+    val settings: String,
+    val menu: String,
+    val searchMovie: String,
+    val error: String
+)

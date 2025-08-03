@@ -1,10 +1,10 @@
 package com.example.cinemasearch.di.module
 
 import androidx.lifecycle.ViewModel
-import com.example.cinemasearch.presintation.viewModelPackage.detailsViewModelPack.DetailsViewModel
-import com.example.cinemasearch.presintation.viewModelPackage.favoritesScreenViewModel.FavoritesViewModel
-import com.example.cinemasearch.presintation.viewModelPackage.mainScreenViewModel.SearchFilmsViewModel
-import com.example.cinemasearch.presintation.viewModelPackage.selectionOfFilmsViewModel.CollectionsViewModel
+import com.example.cinemasearch.presentation.viewModelPackage.detailsViewModelPack.DetailsViewModel
+import com.example.cinemasearch.presentation.viewModelPackage.favoritesScreenViewModel.FavoritesViewModel
+import com.example.cinemasearch.presentation.viewModelPackage.mainScreenViewModel.SearchFilmsViewModel
+import com.example.cinemasearch.presentation.viewModelPackage.selectionOfFilmsViewModel.CollectionsViewModel
 import dagger.Binds
 import dagger.MapKey
 import dagger.Module

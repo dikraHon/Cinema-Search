@@ -7,6 +7,7 @@ import com.example.cinemasearch.data.repositoryImplementation.mappersPackage.Pro
 import com.example.cinemasearch.di.qualifier.ApiService
 import com.example.cinemasearch.domain.modelData.Films
 import com.example.cinemasearch.domain.repositoryPackage.FilmRepository
+import com.example.cinemasearch.presentation.rememberStrings
 import jakarta.inject.Inject
 import jakarta.inject.Singleton
 
