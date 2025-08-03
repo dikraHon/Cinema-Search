@@ -1,9 +1,13 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.cinemasearch.presintation.detailsScreenPackage
 
+import android.content.Intent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -15,6 +19,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.cinemasearch.presintation.viewModelPackage.detailsViewModelPack.DetailsViewModel
 
@@ -27,7 +34,7 @@ fun DetailsScreen(
 ) {
     val films by detailsViewModel.film.collectAsStateWithLifecycle()
     val isLoading by detailsViewModel.isLoading.collectAsStateWithLifecycle()
-
+    val context = LocalContext.current
     LaunchedEffect(filmId) {
         detailsViewModel.loadFilmDetails(filmId)
     }
@@ -35,19 +42,48 @@ fun DetailsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(films?.name ?: "Details") },
+                title = {
+                    Text(films?.name ?: "Details")
+                        },
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
+                },
+                actions = {
+                    films?.let {
+                        IconButton(onClick = {
+                            val shareText = "Фильм: ${it.name ?: "Без названия"}\n" +
+                                    "Рейтинг: ${"%.1f".format(it.rating)}\n" +
+                                    "Год: ${it.year}\n" +
+                                    "Описание: ${it.description?.take(200) ?: "нет описания"}"
+                            val intent = Intent(Intent.ACTION_SEND).apply {
+                                type = "text/plain"
+                                putExtra(Intent.EXTRA_TEXT, shareText)
+                            }
+                            ContextCompat.startActivity(
+                                context,
+                                Intent.createChooser(intent, "Поделиться фильмом"),
+                                null
+                            )
+                        }) {
+                            Icon(Icons.Default.Share, contentDescription = "Поделиться")
+                        }
+                    }
                 }
             )
+        },
+        content = { innerPadding ->
+            if (isLoading) {
+                CircularProgressIndicator(modifier = Modifier.fillMaxSize())
+            } else if (films != null) {
+                FilmDetailsContent(
+                    film = films!!,
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .padding(top = 0.dp) // Убираем верхний отступ полностью
+                )
+            }
         }
-    ) { padding ->
-        if (isLoading) {
-            CircularProgressIndicator(modifier = Modifier.fillMaxSize())
-        } else if (films != null) {
-            FilmDetailsContent(film = films!!, modifier = Modifier.padding(padding))
-        }
-    }
+    )
 }

@@ -1,5 +1,8 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.cinemasearch.presintation.mainScreenListFilms
 
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -16,6 +19,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -28,9 +32,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import coil.compose.AsyncImage
 import com.example.cinemasearch.R
 import com.example.cinemasearch.domain.Films
@@ -44,17 +50,18 @@ fun FilmCard(
     onAddToCollection: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .padding(horizontal = 8.dp, vertical = 8.dp)
             .clickable(onClick = onFilmClick),
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(8.dp),
             verticalAlignment = Alignment.Top
         ) {
             Box(
@@ -140,6 +147,24 @@ fun FilmCard(
                         Icon(
                             imageVector = Icons.Default.Add,
                             contentDescription = "Add to selection",
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                    IconButton(onClick = {
+                        val shareText = "Фильм: ${film.name ?: "Без названия"}\nРейтинг: ${"%.1f".format(film.rating)}\nГод: ${film.year}"
+                        val intent = Intent(Intent.ACTION_SEND).apply {
+                            type = "text/plain"
+                            putExtra(Intent.EXTRA_TEXT, shareText)
+                        }
+                        ContextCompat.startActivity(
+                            context,
+                            Intent.createChooser(intent, "Поделиться фильмом"),
+                            null
+                        )
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.Share,
+                            contentDescription = "Поделиться",
                             tint = MaterialTheme.colorScheme.primary
                         )
                     }

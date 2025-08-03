@@ -40,7 +40,7 @@ fun FilmsList(
             text = "Films",
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.padding(
-                top = 24.dp,
+                top = 8.dp,
                 start = 16.dp,
                 bottom = 12.dp
             )

@@ -20,6 +20,7 @@ class CollectionsViewModel @Inject constructor(
     val filmsInCollection: StateFlow<List<Films>> = _filmsInCollection
     private val _selectedFilmId = MutableStateFlow<Long?>(null)
     val selectedFilmId: StateFlow<Long?> = _selectedFilmId
+
     init {
         loadCollections()
     }
@@ -49,7 +50,6 @@ class CollectionsViewModel @Inject constructor(
     fun selectFilmForCollection(filmId: Long) {
         _selectedFilmId.value = filmId
     }
-
 
     fun createCollection(name: String) {
         viewModelScope.launch {

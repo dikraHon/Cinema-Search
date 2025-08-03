@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,20 +17,26 @@ import com.example.cinemasearch.domain.Films
 
 @Composable
 fun FilmDetailsContent(film: Films, modifier: Modifier = Modifier) {
-    Column(modifier = modifier.padding(16.dp)) {
+    Column(
+        modifier = modifier
+            .verticalScroll(rememberScrollState())
+            .padding(horizontal = 16.dp) // Только горизонтальные отступы
+    ) {
         AsyncImage(
             model = film.poster,
             contentDescription = film.name,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(300.dp)
+                .height(200.dp)
+                .padding(top = 0.dp) // Нет отступа сверху
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(8.dp)) // Уменьшенный отступ после постера
 
         Text(
             text = film.name ?: "No title",
-            style = MaterialTheme.typography.headlineMedium
+            style = MaterialTheme.typography.headlineMedium,
+            modifier = Modifier.padding(bottom = 4.dp) // Минимальный отступ
         )
 
         Text(
@@ -47,5 +55,6 @@ fun FilmDetailsContent(film: Films, modifier: Modifier = Modifier) {
             text = film.description ?: "No description",
             style = MaterialTheme.typography.bodyMedium
         )
+        Spacer(modifier = Modifier.height(32.dp))
     }
 }
