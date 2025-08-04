@@ -2,6 +2,7 @@ package com.example.cinemasearch.presentation.viewModelPackage
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.cinemasearch.presentation.settingsPackage.ThemeViewModel
 import com.example.cinemasearch.presentation.viewModelPackage.detailsViewModelPack.DetailsViewModel
 import com.example.cinemasearch.presentation.viewModelPackage.favoritesScreenViewModel.FavoritesViewModel
 import com.example.cinemasearch.presentation.viewModelPackage.mainScreenViewModel.SearchFilmsViewModel
@@ -14,6 +15,7 @@ class FactoryViewModel @Inject constructor(
     private val favoritesViewModelProvider: Provider<FavoritesViewModel>,
     private val detailsViewModelProvider: Provider<DetailsViewModel>,
     private val collectionsViewModelProvider: Provider<CollectionsViewModel>,
+    private val themeViewModelProvider: Provider<ThemeViewModel>,
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -29,6 +31,9 @@ class FactoryViewModel @Inject constructor(
             }
             modelClass.isAssignableFrom(CollectionsViewModel::class.java) -> {
                 collectionsViewModelProvider.get() as T
+            }
+            modelClass.isAssignableFrom(ThemeViewModel::class.java) -> {
+                themeViewModelProvider.get() as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class")
         }

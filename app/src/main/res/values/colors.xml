@@ -7,4 +7,15 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="surface">#FFFFFFFF</color>
+    <!-- Цвета для Material 3 -->
+    <color name="md_theme_light_primary">@color/purple_500</color>
+    <color name="md_theme_light_onPrimary">@color/white</color>
+    <color name="md_theme_light_surface">@color/white</color>
+    <color name="md_theme_light_onSurface">@color/black</color>
+
+    <color name="md_theme_dark_primary">@color/purple_200</color>
+    <color name="md_theme_dark_onPrimary">@color/black</color>
+    <color name="md_theme_dark_surface">#FF121212</color>
+    <color name="md_theme_dark_onSurface">@color/white</color>
 </resources>

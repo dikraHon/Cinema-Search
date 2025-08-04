@@ -35,6 +35,7 @@ import com.example.cinemasearch.presentation.rememberStrings
 import com.example.cinemasearch.presentation.searchPackage.CategoryChips
 import com.example.cinemasearch.presentation.searchPackage.SearchTopBar
 import com.example.cinemasearch.presentation.settingsPackage.SettingsScreen
+import com.example.cinemasearch.presentation.settingsPackage.ThemeViewModel
 import com.example.cinemasearch.presentation.viewModelPackage.detailsViewModelPack.DetailsViewModel
 import com.example.cinemasearch.presentation.viewModelPackage.favoritesScreenViewModel.FavoritesViewModel
 import com.example.cinemasearch.presentation.viewModelPackage.mainScreenViewModel.SearchFilmsViewModel
@@ -48,6 +49,7 @@ fun MainScreen(
     favoritesViewModel: FavoritesViewModel,
     detailsViewModel: DetailsViewModel,
     collectionsViewModel: CollectionsViewModel,
+    themeViewModel: ThemeViewModel
 ) {
     // 1. Navigation and UI state
     val navController = rememberNavController()
@@ -220,7 +222,8 @@ fun MainScreen(
                 }
                 composable("settings") {
                     SettingsScreen(
-                        onBackClick = { navController.popBackStack() }
+                        onBackClick = { navController.popBackStack() },
+                        themeViewModel = themeViewModel
                     )
                 }
             }

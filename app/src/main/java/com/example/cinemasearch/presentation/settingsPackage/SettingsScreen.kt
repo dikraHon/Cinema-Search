@@ -1,8 +1,12 @@
 package com.example.cinemasearch.presentation.settingsPackage
 
+import android.app.Activity
+import android.content.Context
+import android.content.ContextWrapper
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -11,9 +15,11 @@ import com.example.cinemasearch.R
 
 @Composable
 fun SettingsScreen(
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    themeViewModel: ThemeViewModel
 ) {
     val context = LocalContext.current
+    val activity = context.findActivity()
 
     Column(
         modifier = Modifier
@@ -33,30 +39,25 @@ fun SettingsScreen(
             modifier = Modifier.padding(bottom = 8.dp)
         )
 
-        Button(
-            onClick = {
-                LocalizationManager.setAppLocale(context, "en")
-                (context as? android.app.Activity)?.recreate()
-            },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(stringResource(R.string.english))
-        }
+        Button(onClick = {
+            LocalizationManager.setAppLocale(context, "en")
+            activity?.recreate()
+        }) { Text("English") }
 
-        Spacer(modifier = Modifier.height(8.dp))
+        // Кнопка русского языка
+        Button(onClick = {
+            LocalizationManager.setAppLocale(context, "ru")
+            activity?.recreate()
+        }) { Text("Русский") }
 
-        Button(
-            onClick = {
-                LocalizationManager.setAppLocale(context, "ru")
-                (context as? android.app.Activity)?.recreate()
-            },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(stringResource(R.string.russian))
-        }
-
-        Spacer(modifier = Modifier.height(24.dp))
-
+        // Переключатель темы
+        Switch(
+            checked = themeViewModel.isDarkTheme,
+            onCheckedChange = {
+                themeViewModel.toggleTheme()
+                activity?.recreate()
+            }
+        )
         Button(
             onClick = onBackClick,
             modifier = Modifier.fillMaxWidth()
@@ -64,4 +65,9 @@ fun SettingsScreen(
             Text(stringResource(R.string.back))
         }
     }
+}
+fun Context.findActivity(): Activity? = when (this) {
+    is Activity -> this
+    is ContextWrapper -> baseContext.findActivity()
+    else -> null
 }

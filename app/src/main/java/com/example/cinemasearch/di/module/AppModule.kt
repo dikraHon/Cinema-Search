@@ -1,5 +1,6 @@
 package com.example.cinemasearch.di.module
 
+import android.app.Application
 import android.content.Context
 import com.example.cinemasearch.data.database.AppDatabase
 import com.example.cinemasearch.data.remote.ApiClient

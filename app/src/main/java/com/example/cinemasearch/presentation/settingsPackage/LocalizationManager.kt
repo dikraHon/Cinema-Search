@@ -10,29 +10,19 @@ import java.util.*
 import androidx.core.content.edit
 
 object LocalizationManager {
-    private const val PREFS_NAME = "app_settings"
-    private const val LANGUAGE_KEY = "language"
+    private const val PREFS_NAME = "lang_prefs"
+    private const val LANG_KEY = "app_language"
 
     fun setAppLocale(context: Context?, language: String): Context {
-        require(context != null) { "Context cannot be null" }
-
-        val validLanguages = setOf("en", "ru")
-        require(language in validLanguages) { "Unsupported language: $language" }
-
+        requireNotNull(context) { "Context cannot be null" }
         persistLanguage(context, language)
         return updateResources(context, language)
     }
 
-    fun getCurrentLanguage(context: Context?): String {
-        val prefs = context?.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        return prefs?.getString(LANGUAGE_KEY, Locale.getDefault().language) ?: "en"
-    }
 
     private fun persistLanguage(context: Context, language: String) {
         context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-            .edit {
-                putString(LANGUAGE_KEY, language)
-            }
+            .edit { putString(LANG_KEY, language) }
     }
 
     @SuppressLint("ObsoleteSdkInt")
@@ -41,23 +31,19 @@ object LocalizationManager {
         Locale.setDefault(locale)
 
         val resources = context.resources
-        val configuration = Configuration(resources.configuration)
+        val config = Configuration(resources.configuration)
+        config.setLocale(locale)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            configuration.setLocale(locale)
-            configuration.setLayoutDirection(locale)
-            return context.createConfigurationContext(configuration)
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            context.createConfigurationContext(config)
         } else {
-            configuration.locale = locale
-            configuration.setLayoutDirection(locale)
-            resources.updateConfiguration(configuration, resources.displayMetrics)
+            resources.updateConfiguration(config, resources.displayMetrics)
+            context
         }
-
-        return context
     }
 
-    fun applyLanguage(context: Context) {
-        val language = getCurrentLanguage(context)
-        updateResources(context, language)
+    fun getCurrentLanguage(context: Context): String {
+        return context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            .getString(LANG_KEY, Locale.getDefault().language) ?: "en"
     }
 }
