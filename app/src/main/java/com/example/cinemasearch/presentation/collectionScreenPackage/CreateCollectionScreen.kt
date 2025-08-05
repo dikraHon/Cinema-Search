@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -40,7 +41,10 @@ fun CreateCollectionScreen(
             modifier = Modifier.padding(top = 16.dp),
             enabled = name.isNotBlank()
         ) {
-            Text(string.create)
+            Text(
+                text = string.create,
+                color = MaterialTheme.colorScheme.onSurface
+            )
         }
     }
 }

@@ -7,6 +7,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -19,8 +20,9 @@ fun DrawerItem(
         text = text,
         style = MaterialTheme.typography.bodyLarge,
         modifier = Modifier
-            .padding(vertical = 12.dp)
+            .padding(vertical = 12.dp, horizontal = 8.dp)
             .fillMaxWidth()
-            .clickable{ onItemSelected(route) }
+            .clickable{ onItemSelected(route) },
+        color = Color(0xFF1976D2) // Синий 700
     )
 }

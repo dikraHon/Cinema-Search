@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -168,8 +169,11 @@ fun MainScreen(
                             )
                         }
 
-                        else -> {
-                            Text(strings.noMovie, modifier = Modifier.fillMaxSize())
+                        else -> { Text(
+                                strings.noMovie,
+                                modifier = Modifier.fillMaxSize(),
+                                color = MaterialTheme.colorScheme.onSurface
+                            )
                         }
                     }
                 }

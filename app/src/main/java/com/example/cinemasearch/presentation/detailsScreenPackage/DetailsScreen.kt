@@ -12,6 +12,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -46,8 +47,11 @@ fun DetailsScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(films?.name ?: string.notHaveName)
-                        },
+                    Text(
+                        text = films?.name ?: string.notHaveName,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                },
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = string.back)
@@ -59,8 +63,10 @@ fun DetailsScreen(
                             val shareText = "${string.film}: ${it.name ?: string.notHaveName}\n" +
                                     "${string.rating}: ${"%.1f".format(it.rating)}\n" +
                                     "${string.year}: ${it.year}\n" +
-                                    "${string.description}: ${it.description?.take(200) 
-                                        ?: string.notHaveDescription}"
+                                    "${string.description}: ${
+                                        it.description?.take(200)
+                                            ?: string.notHaveDescription
+                                    }"
                             val intent = Intent(Intent.ACTION_SEND).apply {
                                 type = "text/plain"
                                 putExtra(Intent.EXTRA_TEXT, shareText)

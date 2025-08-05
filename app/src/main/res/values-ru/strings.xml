@@ -42,4 +42,9 @@
     <string name="system_default">Системная</string>
     <string name="light_theme">Светлая</string>
     <string name="dark_theme">Тёмная</string>
+    <string name="notification_loading_title">Обновление данных</string>
+    <string name="notification_loading_message">Идет загрузка новых фильмов…</string>
+    <string name="notification_success_title">Данные обновлены</string>
+    <string name="notification_success_message">Список фильмов успешно обновлен</string>
+    <string name="update_error">ошибка</string>
 </resources>

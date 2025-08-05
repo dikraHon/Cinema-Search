@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.cinemasearch.presentation.rememberStrings
 
@@ -19,19 +20,20 @@ fun DrawerContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 40.dp)
-            .background(MaterialTheme.colorScheme.background)
+            .background(MaterialTheme.colorScheme.surface)
+            .padding(top = 48.dp, start = 24.dp, end = 24.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
                 text = string.cinemaSearch,
                 style = MaterialTheme.typography.headlineSmall,
-                modifier = Modifier.padding(bottom = 24.dp)
+                modifier = Modifier.padding(bottom = 32.dp),
+                color = Color(0xFFD32F2F), // Красный 700
             )
             DrawerItem(
                 text = string.films,
                 route = "films",
-                onItemSelected = onItemSelected
+                onItemSelected = onItemSelected,
             )
             DrawerItem(
                 text = string.favorites,

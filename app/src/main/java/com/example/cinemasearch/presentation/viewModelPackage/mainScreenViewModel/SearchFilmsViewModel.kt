@@ -35,8 +35,10 @@ class SearchFilmsViewModel @Inject constructor(
                     )
                 }
             } catch (e: Exception) {
+                val cachedFilms = filmRepository.getAllFilmsFromCache()
                 _state.update {
                     it.copy(
+                        films = cachedFilms,
                         isLoading = false,
                         error = "Error: ${e.message ?: "Unknown error"}"
                     )

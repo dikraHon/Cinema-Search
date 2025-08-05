@@ -99,7 +99,8 @@ fun FilmCard(
                     style = MaterialTheme.typography.titleMedium,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.padding(bottom = 4.dp)
+                    modifier = Modifier.padding(bottom = 4.dp),
+                    color = MaterialTheme.colorScheme.onSurface
                 )
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -114,7 +115,8 @@ fun FilmCard(
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
                         text = "%.1f".format(film.rating ?: 0.0),
-                        style = MaterialTheme.typography.bodyMedium
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurface
                     )
                 }
                 Text(

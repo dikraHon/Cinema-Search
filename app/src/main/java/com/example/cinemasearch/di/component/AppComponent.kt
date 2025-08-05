@@ -8,6 +8,7 @@ import com.example.cinemasearch.data.database.daoPackage.FilmsDao
 import com.example.cinemasearch.di.module.AppModule
 import com.example.cinemasearch.di.module.RepositoryModule
 import com.example.cinemasearch.di.module.ViewModelModule
+import com.example.cinemasearch.di.module.WorkerModule
 import com.example.cinemasearch.domain.repositoryPackage.CollectionRepository
 import com.example.cinemasearch.domain.repositoryPackage.FavoriteRepository
 import com.example.cinemasearch.domain.repositoryPackage.FilmRepository
@@ -20,7 +21,8 @@ import jakarta.inject.Singleton
 @Component(modules = [
     AppModule::class,
     ViewModelModule::class,
-    RepositoryModule::class,]
+    RepositoryModule::class,
+    WorkerModule::class]
 )
 @Singleton
 interface AppComponent {

@@ -45,7 +45,8 @@ fun CollectionItem(
             Text(
                 text = collection.name,
                 style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                color = MaterialTheme.colorScheme.onSurface
             )
             IconButton(onClick = {
                 val intent = Intent(Intent.ACTION_SEND).apply {

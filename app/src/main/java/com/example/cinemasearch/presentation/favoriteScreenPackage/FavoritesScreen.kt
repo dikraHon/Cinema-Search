@@ -2,6 +2,7 @@ package com.example.cinemasearch.presentation.favoriteScreenPackage
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,14 +19,17 @@ fun FavoritesScreen(
     val string = rememberStrings()
 
     if (favorites.isEmpty()) {
-        Text(string.noMovie)
+        Text(
+            text = string.noMovie,
+            color = MaterialTheme.colorScheme.onSurface
+        )
     } else {
         LazyColumn(modifier = modifier) {
             items(favorites, key = { it.id }) { film ->
                 FilmCard(
                     film = film,
                     isFavorite = true,
-                    onFilmClick = {  },
+                    onFilmClick = { },
                     onFavoriteClick = { favoritesViewModel.removeFromFavorites(film.id) },
                     onAddToCollection = {}
                 )

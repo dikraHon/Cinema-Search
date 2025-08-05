@@ -9,4 +9,10 @@ interface FilmRepository {
     suspend fun getNewReleases(): List<Films>
     suspend fun searchFilms(query: String): List<Films>
     suspend fun getFilmDetails(id: Long): Films
+
+    suspend fun updatePopularFilms()
+    suspend fun updateTopRatedFilms()
+    suspend fun updateNewReleases()
+
+    suspend fun getAllFilmsFromCache(): List<Films>
 }

@@ -90,4 +90,8 @@ dependencies {
     implementation("com.google.android.material:material:1.6.0")
     implementation("androidx.compose.material:material:1.3.0")
 
+    // WorkManager
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
+    implementation("androidx.concurrent:concurrent-futures-ktx:1.1.0")
+
 }

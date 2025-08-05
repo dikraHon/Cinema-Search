@@ -38,24 +38,28 @@ fun FilmDetailsContent(film: Films, modifier: Modifier = Modifier) {
         Text(
             text = film.name ?: string.notHaveName,
             style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.padding(bottom = 4.dp)
+            modifier = Modifier.padding(bottom = 4.dp),
+            color = MaterialTheme.colorScheme.onSurface
         )
 
         Text(
             text = "${string.rating}: ${"%.1f".format(film.rating)}",
-            style = MaterialTheme.typography.bodyLarge
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurface
         )
 
         Text(
             text = "${string.year}: ${film.year}",
-            style = MaterialTheme.typography.bodyLarge
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurface
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
             text = film.description ?: string.notHaveDescription,
-            style = MaterialTheme.typography.bodyMedium
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurface
         )
         Spacer(modifier = Modifier.height(32.dp))
     }

@@ -13,5 +13,6 @@ data class Films(
     val year: Int?,
     val isFavorite: Boolean = false,
     val collections: String = "",
-    val isInCollection: Boolean = false
+    val isInCollection: Boolean = false,
+    val lastUpdated: Long = System.currentTimeMillis()
 )

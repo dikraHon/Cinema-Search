@@ -34,10 +34,20 @@ fun SearchTopBar(
             TextField(
                 value = searchQuery,
                 onValueChange = onSearchChange,
-                placeholder = { Text(string.searchMovie) },
+                placeholder = {
+                    Text(
+                        text = string.searchMovie,
+                        color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.8f)
+                    )
+                },
                 colors = TextFieldDefaults.colors(
                     unfocusedContainerColor = Color.Transparent,
-                    focusedContainerColor = Color.Transparent
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedTextColor = MaterialTheme.colorScheme.onPrimary,
+                    focusedTextColor = MaterialTheme.colorScheme.onPrimary,
+                    cursorColor = MaterialTheme.colorScheme.onPrimary,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    focusedIndicatorColor = Color.Transparent
                 ),
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
@@ -47,7 +57,8 @@ fun SearchTopBar(
             IconButton(onClick = onMenuClick) {
                 Icon(
                     painter = painterResource(R.drawable.ic_menu),
-                    contentDescription = string.menu
+                    contentDescription = string.menu,
+                    tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
         },
@@ -55,13 +66,16 @@ fun SearchTopBar(
             IconButton(onClick = onFavoritesClick) {
                 Icon(
                     imageVector = Icons.Default.Favorite,
-                    contentDescription = string.favorites
+                    contentDescription = string.favorites,
+                    tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
+            containerColor = Color(0xFFD32F2F), // Красный 700
+            titleContentColor = MaterialTheme.colorScheme.onPrimary,
+            navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
+            actionIconContentColor = MaterialTheme.colorScheme.onPrimary
         ),
         modifier = modifier
     )

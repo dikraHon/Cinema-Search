@@ -2,7 +2,9 @@
 
 package com.example.cinemasearch.presentation
 
+import android.Manifest
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.Window
@@ -12,6 +14,7 @@ import androidx.activity.viewModels
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import com.example.cinemasearch.R
+import com.example.cinemasearch.di.DataUpdateWorker
 import com.example.cinemasearch.di.MyApp
 import com.example.cinemasearch.presentation.mainScreenListFilms.MainScreen
 import com.example.cinemasearch.presentation.settingsPackage.LocalizationManager
@@ -36,7 +39,7 @@ class MainActivity : ComponentActivity() {
     private val collectionsViewModel: CollectionsViewModel by viewModels { viewModelFactory }
 
     private val themeViewModel: ThemeViewModel by viewModels { viewModelFactory }
-
+    private lateinit var notificationHelper: NotificationHelper
     override fun attachBaseContext(newBase: Context?) {
         super.attachBaseContext(
             LocalizationManager.setAppLocale(
@@ -50,7 +53,10 @@ class MainActivity : ComponentActivity() {
         (application as MyApp).appComponent.inject(this)
         setAppTheme()
         super.onCreate(savedInstanceState)
-
+        permission()
+        if (savedInstanceState == null) {
+            DataUpdateWorker.schedule(this)
+        }
         setContent {
             CinemaSearchTheme(darkTheme = themeViewModel.isDarkTheme) {
                 MainScreen(
@@ -64,6 +70,15 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    private fun permission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requestPermissions(
+                arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                1001
+            )
+        }
+
+    }
     private fun setAppTheme() {
         if (themeViewModel.isDarkTheme) {
             setTheme(R.style.Theme_CinemaSearch_Dark)
@@ -73,11 +88,7 @@ class MainActivity : ComponentActivity() {
             window.setLightSystemBars()
         }
     }
-
 }
-
-
-
 fun Window.setDarkSystemBars() {
     statusBarColor = Color.Black.toArgb()
     navigationBarColor = Color.Black.toArgb()

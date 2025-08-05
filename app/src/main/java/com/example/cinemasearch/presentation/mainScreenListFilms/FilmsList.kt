@@ -46,7 +46,8 @@ fun FilmsList(
                 top = 8.dp,
                 start = 16.dp,
                 bottom = 12.dp
-            )
+            ),
+            color = MaterialTheme.colorScheme.onSurface
         )
         HorizontalDivider(
             modifier = Modifier.padding(horizontal = 16.dp),
@@ -68,14 +69,15 @@ fun FilmsList(
                                         collectionsViewModel.addSelectedFilmToCollection(collection.id)
                                         showDialog = false
                                     }
-                                    .padding(8.dp)
+                                    .padding(8.dp),
+                                color = MaterialTheme.colorScheme.onSurface
                             )
                         }
                     }
                 },
                 confirmButton = {
                     TextButton(onClick = { showDialog = false }) {
-                        Text(string.cancel)
+                        Text(string.cancel, color = MaterialTheme.colorScheme.onSurface)
                     }
                 }
             )

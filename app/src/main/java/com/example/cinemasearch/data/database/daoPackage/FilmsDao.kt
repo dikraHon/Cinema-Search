@@ -12,6 +12,8 @@ interface FilmsDao {
     @Query("SELECT * FROM films")
     suspend fun getAllFilms(): List<Films>
 
+    @Query("SELECT * FROM films WHERE isFavorite = 1")
+    suspend fun getFavoriteFilms(): List<Films>
     @Query("SELECT EXISTS(SELECT * FROM films WHERE id = :filmId AND isFavorite = 1)")
     suspend fun isFavorite(filmId: Long): Boolean
     @Query("SELECT id FROM films WHERE id = :filmId")
@@ -25,4 +27,7 @@ interface FilmsDao {
 
     @Update(entity = Films::class)
     suspend fun updateFilm(film: Films)
+
+    @Query("DELETE FROM films WHERE isFavorite = 0 AND lastUpdated < :expiryTime")
+    suspend fun clearOldNonFavorites(expiryTime: Long)
 }
