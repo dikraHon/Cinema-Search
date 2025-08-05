@@ -2,7 +2,7 @@ package com.example.cinemasearch.di.module
 
 import android.content.Context
 import androidx.work.WorkerParameters
-import com.example.cinemasearch.di.DataUpdateWorker
+import com.example.cinemasearch.data.DataUpdateWorker
 import com.example.cinemasearch.domain.repositoryPackage.FilmRepository
 import dagger.Module
 import dagger.Provides

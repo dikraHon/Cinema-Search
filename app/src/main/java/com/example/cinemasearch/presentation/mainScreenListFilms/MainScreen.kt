@@ -1,8 +1,10 @@
 package com.example.cinemasearch.presentation.mainScreenListFilms
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.MaterialTheme
@@ -20,6 +22,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -32,7 +36,7 @@ import com.example.cinemasearch.presentation.collectionScreenPackage.CreateColle
 import com.example.cinemasearch.presentation.detailsScreenPackage.DetailsScreen
 import com.example.cinemasearch.presentation.favoriteScreenPackage.FavoritesScreen
 import com.example.cinemasearch.presentation.menuFilmsPackage.DrawerContent
-import com.example.cinemasearch.presentation.rememberStrings
+import com.example.cinemasearch.presentation.componentsPack.rememberStrings
 import com.example.cinemasearch.presentation.searchPackage.CategoryChips
 import com.example.cinemasearch.presentation.searchPackage.SearchTopBar
 import com.example.cinemasearch.presentation.settingsPackage.SettingsScreen
@@ -101,7 +105,6 @@ fun MainScreen(
     }
 
     // 6. UI
-
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
@@ -114,11 +117,17 @@ fun MainScreen(
                     }
                 }
             )
-        }
+        },
+        modifier = Modifier.fillMaxSize(),
+        scrimColor = Color(0x66000000)
     ) {
         Scaffold(
             topBar = {
-                Column {
+                Column(
+                    modifier = Modifier
+                        .background(Color.Transparent)
+                        .statusBarsPadding()
+                ) {
                     SearchTopBar(
                         searchQuery = searchQuery,
                         onSearchChange = { searchQuery = it },
@@ -180,6 +189,7 @@ fun MainScreen(
                 composable("favorites") {
                     FavoritesScreen(
                         favoritesViewModel = favoritesViewModel,
+                        collectionsViewModel = collectionsViewModel,
                         modifier = Modifier.fillMaxSize()
                     )
                 }

@@ -31,14 +31,14 @@ private val DarkColorScheme = darkColorScheme(
 private val LightColorScheme = lightColorScheme(
     primary = Color(0xFFD32F2F), // Красный 700
     onPrimary = Color.White,
-    primaryContainer = Color(0xFFFFCDD2), // Красный 100
-    onPrimaryContainer = Color(0xFFB71C1C), // Красный 900
+    primaryContainer = Color(0xFFFFCDD2),
+    onPrimaryContainer = Color(0xFFB71C1C),
 
-    background = LightBackground,
-    onBackground = LightText,
+    background = Color(0xFFF5F5F5), // Темнее стандартного
+    onBackground = Color(0xFF212121),
 
-    surface = LightSurface,
-    onSurface = LightText,
+    surface = Color(0xFFEEEEEE), // Серый фон
+    onSurface = Color(0xFF212121),
 
     surfaceVariant = Color(0xFFE0E0E0),
     onSurfaceVariant = Color(0xFF5E5E5E)

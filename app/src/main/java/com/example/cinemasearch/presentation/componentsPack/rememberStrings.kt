@@ -1,4 +1,4 @@
-package com.example.cinemasearch.presentation
+package com.example.cinemasearch.presentation.componentsPack
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource

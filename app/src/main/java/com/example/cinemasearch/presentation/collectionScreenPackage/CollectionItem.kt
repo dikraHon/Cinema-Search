@@ -19,7 +19,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.example.cinemasearch.domain.modelData.CollectionFilms
-import com.example.cinemasearch.presentation.rememberStrings
+import com.example.cinemasearch.presentation.componentsPack.rememberStrings
 
 @Suppress("DEPRECATION")
 @Composable

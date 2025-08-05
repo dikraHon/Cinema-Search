@@ -1,4 +1,4 @@
-package com.example.cinemasearch.di
+package com.example.cinemasearch.data
 
 import android.Manifest
 import android.content.Context
@@ -10,7 +10,8 @@ import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
-import com.example.cinemasearch.presentation.NotificationHelper
+import com.example.cinemasearch.di.MyApp
+import com.example.cinemasearch.presentation.componentsPack.NotificationHelper
 import jakarta.inject.Inject
 import kotlinx.coroutines.delay
 import java.util.concurrent.TimeUnit
@@ -27,7 +28,6 @@ class DataUpdateWorker @Inject constructor(
         return try {
             val app = applicationContext as? MyApp ?: return Result.failure()
 
-            // Имитация прогресса загрузки
             for (i in 1..3) {
                 delay(1000)
                 NotificationHelper.showDownloadNotification(applicationContext, i * 33)

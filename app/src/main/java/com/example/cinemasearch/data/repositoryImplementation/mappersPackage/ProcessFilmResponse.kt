@@ -1,7 +1,6 @@
 package com.example.cinemasearch.data.repositoryImplementation.mappersPackage
 
 import com.example.cinemasearch.domain.modelData.Films
-import com.example.cinemasearch.presentation.rememberStrings
 
 class ProcessFilmResponse() {
     fun processFilmResponse(films: List<FilmDTO>): List<Films> {

@@ -1,7 +1,12 @@
 package com.example.cinemasearch.presentation.mainScreenListFilms
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -18,9 +23,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.cinemasearch.R
 import com.example.cinemasearch.domain.modelData.Films
-import com.example.cinemasearch.presentation.rememberStrings
+import com.example.cinemasearch.presentation.componentsPack.rememberStrings
 import com.example.cinemasearch.presentation.viewModelPackage.selectionOfFilmsViewModel.CollectionsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,65 +46,79 @@ fun FilmsList(
     var showDialog by remember { mutableStateOf(false) }
 
     val string = rememberStrings()
-
-    Column(modifier = modifier) {
-        Text(
-            text = string.film,
-            style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.padding(
-                top = 8.dp,
-                start = 16.dp,
-                bottom = 12.dp
-            ),
-            color = MaterialTheme.colorScheme.onSurface
+    Box(
+        modifier = Modifier
+            .fillMaxHeight()
+            .fillMaxWidth()
+    ) {
+        Image(
+            painter = painterResource(R.drawable.my_bag),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize(),
+            alpha = 0.9f
         )
-        HorizontalDivider(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            thickness = 1.dp,
-            color = MaterialTheme.colorScheme.outlineVariant
-        )
+        Column(modifier = modifier) {
+            Text(
+                text = string.film,
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.padding(
+                    top = 8.dp,
+                    start = 16.dp,
+                    bottom = 12.dp
+                ),
+                color = Color.White
+            )
+            HorizontalDivider(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                thickness = 1.dp,
+                color = MaterialTheme.colorScheme.outlineVariant
+            )
 
-        if (showDialog) {
-            AlertDialog(
-                onDismissRequest = { showDialog = false },
-                title = { Text(string.selectSelection) },
-                text = {
-                    Column {
-                        collections.forEach { collection ->
-                            Text(
-                                text = collection.name,
-                                modifier = Modifier
-                                    .clickable {
-                                        collectionsViewModel.addSelectedFilmToCollection(collection.id)
-                                        showDialog = false
-                                    }
-                                    .padding(8.dp),
-                                color = MaterialTheme.colorScheme.onSurface
-                            )
+            if (showDialog) {
+                AlertDialog(
+                    onDismissRequest = { showDialog = false },
+                    title = { Text(string.selectSelection) },
+                    text = {
+                        Column {
+                            collections.forEach { collection ->
+                                Text(
+                                    text = collection.name,
+                                    modifier = Modifier
+                                        .clickable {
+                                            collectionsViewModel.addSelectedFilmToCollection(
+                                                collection.id
+                                            )
+                                            showDialog = false
+                                        }
+                                        .padding(8.dp),
+                                    color = MaterialTheme.colorScheme.onSurface
+                                )
+                            }
+                        }
+                    },
+                    confirmButton = {
+                        TextButton(onClick = { showDialog = false }) {
+                            Text(string.cancel, color = MaterialTheme.colorScheme.onSurface)
                         }
                     }
-                },
-                confirmButton = {
-                    TextButton(onClick = { showDialog = false }) {
-                        Text(string.cancel, color = MaterialTheme.colorScheme.onSurface)
-                    }
-                }
-            )
-        }
-
-        LazyColumn {
-            items(films, key = { it.id }) { film ->
-                FilmCard(
-                    film = film,
-                    isFavorite = isFavoriteList.contains(film.id),
-                    onFilmClick = { onFilmClick(film.id) },
-                    onFavoriteClick = { onFavoriteClick(film) },
-                    onAddToCollection = {
-                        collectionsViewModel.selectFilmForCollection(film.id)
-                        showDialog = true
-                        collectionsViewModel.refreshCollections()
-                    }
                 )
+            }
+
+            LazyColumn {
+                items(films, key = { it.id }) { film ->
+                    FilmCard(
+                        film = film,
+                        isFavorite = isFavoriteList.contains(film.id),
+                        onFilmClick = { onFilmClick(film.id) },
+                        onFavoriteClick = { onFavoriteClick(film) },
+                        onAddToCollection = {
+                            collectionsViewModel.selectFilmForCollection(film.id)
+                            showDialog = true
+                            collectionsViewModel.refreshCollections()
+                        }
+                    )
+                }
             }
         }
     }

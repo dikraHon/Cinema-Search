@@ -46,4 +46,19 @@
     <string name="notification_success_title">Data updated</string>
     <string name="notification_success_message">The list of films has been successfully updated</string>
     <string name="update_error">Update error</string>
+    <string name="notifications_about_film_updates_and_downloads">Notifications about film updates and downloads</string>
+    <!-- Repository Errors -->
+    <string name="error_load_all_films">Failed to load films list</string>
+    <string name="error_load_popular">Failed to load popular films</string>
+    <string name="error_load_top_rated">Failed to load top-rated films</string>
+    <string name="error_load_new_releases">Failed to load new releases</string>
+    <string name="error_search_films">Failed to search films</string>
+    <string name="error_load_film_details">Failed to load film details</string>
+    <string name="error_update_popular">Failed to update popular films</string>
+    <string name="error_update_top_rated">Failed to update top-rated films</string>
+    <string name="error_update_new_releases">Failed to update new releases</string>
+
+    <!-- Generic Errors -->
+    <string name="error_unknown">Unknown error</string>
+    <string name="error_cache_expired">Cache expired</string>
 </resources>

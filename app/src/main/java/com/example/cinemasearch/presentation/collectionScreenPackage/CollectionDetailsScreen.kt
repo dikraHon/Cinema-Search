@@ -27,7 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 import com.example.cinemasearch.presentation.mainScreenListFilms.FilmCard
-import com.example.cinemasearch.presentation.rememberStrings
+import com.example.cinemasearch.presentation.componentsPack.rememberStrings
 import com.example.cinemasearch.presentation.viewModelPackage.selectionOfFilmsViewModel.CollectionsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)

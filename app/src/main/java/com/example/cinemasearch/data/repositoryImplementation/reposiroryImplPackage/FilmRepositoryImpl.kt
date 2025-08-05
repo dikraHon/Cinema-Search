@@ -141,7 +141,7 @@ class FilmRepositoryImpl @Inject constructor(
             val expiryTime = System.currentTimeMillis() - TimeUnit.DAYS.toMillis(CACHE_EXPIRY_DAYS)
             filmDao.clearOldNonFavorites(expiryTime)
         } catch (e: Exception) {
-            println("Failed to update top reated films: ${e.message}")
+            println("Failed to update top rated films: ${e.message}")
         }
     }
 

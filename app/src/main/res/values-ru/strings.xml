@@ -47,4 +47,19 @@
     <string name="notification_success_title">Данные обновлены</string>
     <string name="notification_success_message">Список фильмов успешно обновлен</string>
     <string name="update_error">ошибка</string>
+    <string name="notifications_about_film_updates_and_downloads">Notifications about film updates and downloads</string>
+    <!-- Ошибки репозитория -->
+    <string name="error_load_all_films">Ошибка загрузки списка фильмов</string>
+    <string name="error_load_popular">Ошибка загрузки популярных фильмов</string>
+    <string name="error_load_top_rated">Ошибка загрузки топовых фильмов</string>
+    <string name="error_load_new_releases">Ошибка загрузки новинок</string>
+    <string name="error_search_films">Ошибка поиска фильмов</string>
+    <string name="error_load_film_details">Ошибка загрузки деталей фильма</string>
+    <string name="error_update_popular">Ошибка обновления популярных фильмов</string>
+    <string name="error_update_top_rated">Ошибка обновления топовых фильмов</string>
+    <string name="error_update_new_releases">Ошибка обновления новинок</string>
+
+    <!-- Общие ошибки -->
+    <string name="error_unknown">Неизвестная ошибка</string>
+    <string name="error_cache_expired">Данные устарели</string>
 </resources>

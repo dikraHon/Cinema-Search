@@ -40,7 +40,7 @@ import androidx.core.content.ContextCompat
 import coil.compose.AsyncImage
 import com.example.cinemasearch.R
 import com.example.cinemasearch.domain.modelData.Films
-import com.example.cinemasearch.presentation.rememberStrings
+import com.example.cinemasearch.presentation.componentsPack.rememberStrings
 
 @Composable
 fun FilmCard(

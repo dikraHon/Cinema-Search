@@ -1,6 +1,4 @@
-package com.example.cinemasearch.presentation
-
-import android.R
+package com.example.cinemasearch.presentation.componentsPack
 
 data class Strings(
     val film: String,

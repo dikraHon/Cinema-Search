@@ -14,8 +14,9 @@ import androidx.activity.viewModels
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import com.example.cinemasearch.R
-import com.example.cinemasearch.di.DataUpdateWorker
+import com.example.cinemasearch.data.DataUpdateWorker
 import com.example.cinemasearch.di.MyApp
+import com.example.cinemasearch.presentation.componentsPack.NotificationHelper
 import com.example.cinemasearch.presentation.mainScreenListFilms.MainScreen
 import com.example.cinemasearch.presentation.settingsPackage.LocalizationManager
 import com.example.cinemasearch.presentation.settingsPackage.ThemeViewModel

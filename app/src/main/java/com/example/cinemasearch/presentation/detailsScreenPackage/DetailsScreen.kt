@@ -19,13 +19,12 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.cinemasearch.presentation.rememberStrings
+import com.example.cinemasearch.presentation.componentsPack.rememberStrings
 import com.example.cinemasearch.presentation.viewModelPackage.detailsViewModelPack.DetailsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,7 +41,6 @@ fun DetailsScreen(
     LaunchedEffect(filmId) {
         detailsViewModel.loadFilmDetails(filmId)
     }
-
     Scaffold(
         topBar = {
             TopAppBar(
@@ -54,19 +52,23 @@ fun DetailsScreen(
                 },
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = string.back)
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = string.back
+                        )
                     }
                 },
                 actions = {
                     films?.let {
                         IconButton(onClick = {
-                            val shareText = "${string.film}: ${it.name ?: string.notHaveName}\n" +
-                                    "${string.rating}: ${"%.1f".format(it.rating)}\n" +
-                                    "${string.year}: ${it.year}\n" +
-                                    "${string.description}: ${
-                                        it.description?.take(200)
-                                            ?: string.notHaveDescription
-                                    }"
+                            val shareText =
+                                "${string.film}: ${it.name ?: string.notHaveName}\n" +
+                                        "${string.rating}: ${"%.1f".format(it.rating)}\n" +
+                                        "${string.year}: ${it.year}\n" +
+                                        "${string.description}: ${
+                                            it.description?.take(200)
+                                                ?: string.notHaveDescription
+                                        }"
                             val intent = Intent(Intent.ACTION_SEND).apply {
                                 type = "text/plain"
                                 putExtra(Intent.EXTRA_TEXT, shareText)
