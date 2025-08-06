@@ -62,13 +62,19 @@ fun DetailsScreen(
                     films?.let {
                         IconButton(onClick = {
                             val shareText =
-                                "${string.film}: ${it.name ?: string.notHaveName}\n" +
-                                        "${string.rating}: ${"%.1f".format(it.rating)}\n" +
-                                        "${string.year}: ${it.year}\n" +
+                                buildString {
+                                    append("${string.film}: ${it.name ?: string.notHaveName}\n")
+                                    append("${string.rating}: ${"%.1f".format(it.rating)}\n")
+                                    append("${string.year}: ${it.year}\n")
+                                    append("${string.countries}: ${it.countries}\n")
+                                    append("${string.genres}: ${it.genres}\n")
+                                    append(
                                         "${string.description}: ${
-                                            it.description?.take(200)
+                                            it.description?.take(300)
                                                 ?: string.notHaveDescription
                                         }"
+                                    )
+                                }
                             val intent = Intent(Intent.ACTION_SEND).apply {
                                 type = "text/plain"
                                 putExtra(Intent.EXTRA_TEXT, shareText)

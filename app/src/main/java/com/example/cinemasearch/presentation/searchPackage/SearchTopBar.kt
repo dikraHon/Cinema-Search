@@ -34,21 +34,18 @@ fun SearchTopBar(
 ) {
     val string = rememberStrings()
 
-    // 1. Основной контейнер с прозрачностью
     Box(
         modifier = modifier
             .fillMaxWidth()
             .background(Color.Transparent)
     ) {
-        // 2. Полупрозрачный красный фон для AppBar
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color(0xCCD32F2F)) // 80% прозрачности
+                .background(Color(0xCCD32F2F))
                 .height(64.dp)
         )
 
-        // 3. TopAppBar с прозрачными элементами
         TopAppBar(
             title = {
                 TextField(
@@ -101,7 +98,7 @@ fun SearchTopBar(
                 }
             },
             colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = Color.Transparent, // Полная прозрачность
+                containerColor = Color.Transparent,
                 titleContentColor = MaterialTheme.colorScheme.onPrimary,
                 navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
                 actionIconContentColor = MaterialTheme.colorScheme.onPrimary,

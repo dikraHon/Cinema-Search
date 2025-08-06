@@ -1,8 +1,5 @@
 package com.example.cinemasearch.presentation.menuFilmsPackage
 
-import android.R.attr.endY
-import android.R.attr.shape
-import android.R.attr.startY
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -74,7 +71,7 @@ fun DrawerContent(
                     text = string.cinemaSearch,
                     style = MaterialTheme.typography.headlineSmall,
                     modifier = Modifier.weight(1f),
-                    color = Color(0xFFD32F2F), // Красный 700
+                    color = Color(0xFFD32F2F),
                 )
             }
             Column(modifier = Modifier.padding(horizontal = 16.dp)) {

@@ -64,4 +64,5 @@
     
     <string name="countries">Countries</string>
     <string name="genres">Genres</string>
+    <string name="count_films">count films</string>
 </resources>

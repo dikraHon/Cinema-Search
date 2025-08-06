@@ -82,7 +82,7 @@ fun FilmDetailsContent(film: Films, modifier: Modifier = Modifier) {
                 )
             }
 
-            film.genres?.takeIf { it.isNotEmpty() }?.let { genres ->
+            film.genres.takeIf { it.isNotEmpty() }?.let { genres ->
                 Text(
                     text = "${string.genres}: ${genres.joinToString(", ")}",
                     style = MaterialTheme.typography.bodyLarge,

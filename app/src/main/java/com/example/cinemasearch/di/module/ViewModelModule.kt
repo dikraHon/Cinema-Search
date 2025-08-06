@@ -1,7 +1,7 @@
 package com.example.cinemasearch.di.module
 
 import androidx.lifecycle.ViewModel
-import com.example.cinemasearch.presentation.settingsPackage.ThemeViewModel
+import com.example.cinemasearch.presentation.viewModelPackage.themeViewModelPack.ThemeViewModel
 import com.example.cinemasearch.presentation.viewModelPackage.detailsViewModelPack.DetailsViewModel
 import com.example.cinemasearch.presentation.viewModelPackage.favoritesScreenViewModel.FavoritesViewModel
 import com.example.cinemasearch.presentation.viewModelPackage.mainScreenViewModel.SearchFilmsViewModel

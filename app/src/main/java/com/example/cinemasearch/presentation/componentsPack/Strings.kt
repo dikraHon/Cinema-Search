@@ -35,5 +35,6 @@ data class Strings(
     val searchMovie: String,
     val error: String,
     val countries: String,
-    val genres: String
+    val genres: String,
+    val count: String
 )

@@ -40,6 +40,8 @@ fun CollectionDetailsScreen(
     val films by collectionsViewModel.filmsInCollection.collectAsState()
     val context = LocalContext.current
     val string = rememberStrings()
+    val collections by collectionsViewModel.collections.collectAsState()
+    val currentCollection = collections.find { it.id == collectionId }
     LaunchedEffect(collectionId) {
         collectionsViewModel.loadFilmsInCollection(collectionId)
         collectionsViewModel.collections.collect {
@@ -58,8 +60,17 @@ fun CollectionDetailsScreen(
                 },
                 actions = {
                     IconButton(onClick = {
-                        val filmList = films.joinToString("\n• ") { it.name ?: string.noTitle }
-                        val shareText = "${string.movieSelection}:\n\n• $filmList"
+                        val filmList = films.joinToString("\n\n• ") { film ->
+                            buildString {
+                                append("${film.name ?: string.notHaveDescription}\n")
+                                append("${string.rating}: ${"%.1f".format(film.rating)}\n")
+                                append("${string.year}: ${film.year}\n")
+                                append("${string.genres}: ${film.genres.joinToString(", ")}")
+                            }
+                        }
+                        val shareText = "${string.movieSelection}: ${currentCollection?.name ?: ""}\n\n" +
+                                "${string.film}:\n\n• $filmList\n\n" +
+                                "${string.count}: ${films.size}\n"
 
                         val intent = Intent(Intent.ACTION_SEND).apply {
                             type = "text/plain"

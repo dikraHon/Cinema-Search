@@ -134,7 +134,7 @@ fun FilmCard(
                     )
                 }
 
-                film.genres?.takeIf { it.isNotEmpty() }?.let { genres ->
+                film.genres.takeIf { it.isNotEmpty() }?.let { genres ->
                     Text(
                         text = genres.joinToString(", "),
                         style = MaterialTheme.typography.bodySmall,
@@ -174,9 +174,20 @@ fun FilmCard(
                         )
                     }
                     IconButton(onClick = {
-                        val shareText = "${strings.film}: ${film.name ?: strings.notHaveName}" +
-                                "\n${strings.rating}: ${"%.1f".format(film.rating)}" +
-                                "\n${strings.year}: ${film.year}"
+                        val shareText = buildString {
+                            append("${strings.film}: ${film.name ?: strings.notHaveName}")
+                            append("\n${strings.rating}: ${"%.1f".format(film.rating)}")
+                            append("\n${strings.year}: ${film.year}")
+                            append("${strings.countries}: ${film.countries}\n")
+                            append("${strings.genres}: ${film.genres}\n")
+                            append(
+                                "${strings.description}: ${
+                                    film.description?.take(300)
+                                        ?: strings.notHaveDescription
+                                }"
+                            )
+
+                        }
                         val intent = Intent(Intent.ACTION_SEND).apply {
                             type = "text/plain"
                             putExtra(Intent.EXTRA_TEXT, shareText)

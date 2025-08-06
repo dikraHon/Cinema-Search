@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AlertDialog
@@ -27,7 +26,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.cinemasearch.R
-import com.example.cinemasearch.domain.modelData.Films
 import com.example.cinemasearch.presentation.mainScreenListFilms.FilmCard
 import com.example.cinemasearch.presentation.componentsPack.rememberStrings
 import com.example.cinemasearch.presentation.viewModelPackage.favoritesScreenViewModel.FavoritesViewModel
@@ -45,7 +43,6 @@ fun FavoritesScreen(
     var showAddToCollection by remember { mutableStateOf(false) }
     var selectedFilmId by remember { mutableStateOf<Long?>(null) }
 
-    // Устанавливаем выбранный фильм при изменении selectedFilmId
     LaunchedEffect(selectedFilmId) {
         selectedFilmId?.let { collectionsViewModel.selectFilmForCollection(it) }
     }
@@ -88,10 +85,10 @@ fun FavoritesScreen(
     if (showAddToCollection) {
         AlertDialog(
             onDismissRequest = { showAddToCollection = false },
-            title = { Text("Добавить в коллекцию") },
+            title = { string.addToCollection },
             text = {
                 Column {
-                    Text("Выберите коллекцию:")
+                    Text(string.collectName)
                     Spacer(modifier = Modifier.height(8.dp))
                     LazyColumn(modifier = Modifier.height(200.dp)) {
                         items(collections) { collection ->
@@ -112,7 +109,7 @@ fun FavoritesScreen(
                 TextButton(
                     onClick = { showAddToCollection = false }
                 ) {
-                    Text("Отмена")
+                    Text(string.cancel)
                 }
             }
         )

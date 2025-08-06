@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.ContextWrapper
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.material3.HorizontalDivider
@@ -18,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.cinemasearch.R
+import com.example.cinemasearch.presentation.viewModelPackage.themeViewModelPack.ThemeViewModel
 
 @Composable
 fun SettingsScreen(
@@ -133,40 +133,6 @@ fun SettingsScreen(
                 Text(stringResource(R.string.back))
             }
         }
-    }
-}
-
-@Composable
-private fun LanguageOption(
-    text: String,
-    selected: Boolean,
-    onClick: () -> Unit
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 12.dp)
-            .clickable(onClick = onClick),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        RadioButton(
-            selected = selected,
-            onClick = null,
-            colors = RadioButtonDefaults.colors(
-                selectedColor = MaterialTheme.colorScheme.primary,
-                unselectedColor = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        )
-        Text(
-            text = text,
-            style = MaterialTheme.typography.bodyLarge,
-            color = if (selected) {
-                MaterialTheme.colorScheme.primary
-            } else {
-                MaterialTheme.colorScheme.onSurface
-            },
-            modifier = Modifier.padding(start = 16.dp)
-        )
     }
 }
 

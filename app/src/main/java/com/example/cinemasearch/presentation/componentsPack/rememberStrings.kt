@@ -41,6 +41,7 @@ fun rememberStrings(): Strings {
         searchMovie = stringResource(R.string.search_movie),
         error = stringResource(R.string.free_token_expired),
         countries = stringResource(R.string.countries),
-        genres = stringResource(R.string.genres)
+        genres = stringResource(R.string.genres),
+        count = stringResource(R.string.count_films)
     )
 }

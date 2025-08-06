@@ -23,7 +23,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -40,7 +39,7 @@ import com.example.cinemasearch.presentation.componentsPack.rememberStrings
 import com.example.cinemasearch.presentation.searchPackage.CategoryChips
 import com.example.cinemasearch.presentation.searchPackage.SearchTopBar
 import com.example.cinemasearch.presentation.settingsPackage.SettingsScreen
-import com.example.cinemasearch.presentation.settingsPackage.ThemeViewModel
+import com.example.cinemasearch.presentation.viewModelPackage.themeViewModelPack.ThemeViewModel
 import com.example.cinemasearch.presentation.viewModelPackage.detailsViewModelPack.DetailsViewModel
 import com.example.cinemasearch.presentation.viewModelPackage.favoritesScreenViewModel.FavoritesViewModel
 import com.example.cinemasearch.presentation.viewModelPackage.mainScreenViewModel.SearchFilmsViewModel

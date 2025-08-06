@@ -1,7 +1,6 @@
 package com.example.cinemasearch.presentation.settingsPackage
 
 import android.content.Context
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.core.content.edit
 
 object ThemeManager {

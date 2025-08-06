@@ -48,7 +48,6 @@
     <string name="notification_success_message">Список фильмов успешно обновлен</string>
     <string name="update_error">ошибка</string>
     <string name="notifications_about_film_updates_and_downloads">Notifications about film updates and downloads</string>
-    <!-- Ошибки репозитория -->
     <string name="error_load_all_films">Ошибка загрузки списка фильмов</string>
     <string name="error_load_popular">Ошибка загрузки популярных фильмов</string>
     <string name="error_load_top_rated">Ошибка загрузки топовых фильмов</string>
@@ -58,10 +57,9 @@
     <string name="error_update_popular">Ошибка обновления популярных фильмов</string>
     <string name="error_update_top_rated">Ошибка обновления топовых фильмов</string>
     <string name="error_update_new_releases">Ошибка обновления новинок</string>
-
-    <!-- Общие ошибки -->
     <string name="error_unknown">Неизвестная ошибка</string>
     <string name="error_cache_expired">Данные устарели</string>
     <string name="countries">Страна</string>
     <string name="genres">Жанр</string>
+    <string name="count_films">Всего фильмов</string>
 </resources>
