@@ -89,14 +89,10 @@ class FilmRepositoryImpl @Inject constructor(
     override suspend fun getFilmDetails(id: Long): Films {
         return try {
             val response = apiService.getFilmById(apiKey, id)
-            val imdbRating = response.rating?.imdb ?: 0.0
-            Films(
-                id = response.id,
-                name = response.name ?: "No name",
-                description = response.description ?: "No description",
-                poster = response.poster?.url ?: "",
-                rating = if (imdbRating == 0.0) processFilmResponse.generateRandomRating() else imdbRating,
-                year = response.year ?: 0,
+            val film = processFilmResponse.processFilmResponse(listOf(response)).firstOrNull()
+                ?: throw Exception("Film not found")
+
+            film.copy(
                 isFavorite = filmDao.isFavorite(response.id)
             )
         } catch (e: Exception) {

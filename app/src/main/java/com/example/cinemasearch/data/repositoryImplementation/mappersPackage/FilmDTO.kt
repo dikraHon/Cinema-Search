@@ -10,6 +10,7 @@ data class FilmDTO(
     val poster: PosterDTO?,
     val rating: RatingDTO?,
     val year: Int?,
+    val countries: List<CountryDTO>?,
     val genres: List<GenreDTO>
 ) {
     data class PosterDTO(val url: String?)
@@ -21,6 +22,7 @@ data class FilmDTO(
         val await: Double?
     )
     data class GenreDTO(val name: String)
+    data class CountryDTO(val name: String)
 }
 
 fun FilmDTO.toFilmEntity(): Films {

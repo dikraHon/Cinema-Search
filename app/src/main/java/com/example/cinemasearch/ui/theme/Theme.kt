@@ -13,10 +13,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Color(0xFFC62828), // Красный 800
+    primary = Color(0xFFC62828),
     onPrimary = Color.White,
-    primaryContainer = Color(0xFF8E0000), // Очень темно-красный
-    onPrimaryContainer = Color(0xFFFFCDD2), // Красный 100
+    primaryContainer = Color(0xFF8E0000),
+    onPrimaryContainer = Color(0xFFFFCDD2),
 
     background = DarkBackground,
     onBackground = DarkText,
@@ -29,15 +29,15 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Color(0xFFD32F2F), // Красный 700
+    primary = Color(0xFFD32F2F),
     onPrimary = Color.White,
     primaryContainer = Color(0xFFFFCDD2),
     onPrimaryContainer = Color(0xFFB71C1C),
 
-    background = Color(0xFFF5F5F5), // Темнее стандартного
+    background = Color(0xFFF5F5F5),
     onBackground = Color(0xFF212121),
 
-    surface = Color(0xFFEEEEEE), // Серый фон
+    surface = Color(0xFFEEEEEE),
     onSurface = Color(0xFF212121),
 
     surfaceVariant = Color(0xFFE0E0E0),
@@ -48,7 +48,6 @@ private val LightColorScheme = lightColorScheme(
 @Composable
 fun CinemaSearchTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {

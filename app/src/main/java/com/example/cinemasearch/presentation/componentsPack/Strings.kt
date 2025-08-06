@@ -33,5 +33,7 @@ data class Strings(
     val settings: String,
     val menu: String,
     val searchMovie: String,
-    val error: String
+    val error: String,
+    val countries: String,
+    val genres: String
 )

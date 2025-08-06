@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.example.cinemasearch.data.database.daoPackage.CollectionsDao
 import com.example.cinemasearch.data.database.daoPackage.FavoritesDao
 import com.example.cinemasearch.data.database.daoPackage.FilmsDao
@@ -17,9 +18,10 @@ import com.example.cinemasearch.domain.modelData.Films
         CollectionFilms::class,
         FilmCollectionCrossRef::class
                ],
-    version = 10,
+    version = 11,
     exportSchema = false
 )
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun filmsDao(): FilmsDao
@@ -38,7 +40,7 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "films_database"
                 )
-                    .fallbackToDestructiveMigration(false)
+                    .fallbackToDestructiveMigration()
                     .build()
                 Instance = instance
                 instance

@@ -73,6 +73,24 @@ fun FilmDetailsContent(film: Films, modifier: Modifier = Modifier) {
                 color = MaterialTheme.colorScheme.onSurface
             )
 
+            film.countries?.takeIf { it.isNotBlank() }?.let { countries ->
+                Text(
+                    text = "${string.countries}: $countries",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.padding(bottom = 4.dp)
+                )
+            }
+
+            film.genres?.takeIf { it.isNotEmpty() }?.let { genres ->
+                Text(
+                    text = "${string.genres}: ${genres.joinToString(", ")}",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+            }
+
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(

@@ -61,4 +61,7 @@
     <!-- Generic Errors -->
     <string name="error_unknown">Unknown error</string>
     <string name="error_cache_expired">Cache expired</string>
+    
+    <string name="countries">Countries</string>
+    <string name="genres">Genres</string>
 </resources>

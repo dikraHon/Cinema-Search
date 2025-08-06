@@ -125,6 +125,25 @@ fun FilmCard(
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
+                film.countries?.takeIf { it.isNotBlank() }?.let { countries ->
+                    Text(
+                        text = countries,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                        modifier = Modifier.padding(bottom = 4.dp)
+                    )
+                }
+
+                film.genres?.takeIf { it.isNotEmpty() }?.let { genres ->
+                    Text(
+                        text = genres.joinToString(", "),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                        modifier = Modifier.padding(bottom = 8.dp),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
                 film.description?.takeIf { it.isNotBlank() }?.let { description ->
                     Text(
                         text = description.take(100) + if (description.length > 100) "..." else "",

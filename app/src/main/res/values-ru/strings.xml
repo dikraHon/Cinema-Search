@@ -62,4 +62,6 @@
     <!-- Общие ошибки -->
     <string name="error_unknown">Неизвестная ошибка</string>
     <string name="error_cache_expired">Данные устарели</string>
+    <string name="countries">Страна</string>
+    <string name="genres">Жанр</string>
 </resources>

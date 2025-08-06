@@ -13,11 +13,13 @@ class ProcessFilmResponse() {
             }
             Films(
                 id = filmDto.id,
-                name = filmDto.name ?: "no name",
-                description = filmDto.description ?: "no description",
+                name = filmDto.name ?: filmDto.alternativeName ?: "No name",
+                description = filmDto.description ?: "No description",
                 poster = filmDto.poster?.url ?: "",
                 rating = rating,
-                year = filmDto.year ?: 0
+                year = filmDto.year ?: 0,
+                countries = filmDto.countries?.joinToString(", ") { it.name },
+                genres = filmDto.genres.map { it.name }
             )
         }
     }

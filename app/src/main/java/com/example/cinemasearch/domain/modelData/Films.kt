@@ -11,6 +11,8 @@ data class Films(
     val poster: String?,
     val rating: Double?,
     val year: Int?,
+    val countries: String? = null,
+    val genres: List<String> = emptyList(),
     val isFavorite: Boolean = false,
     val collections: String = "",
     val isInCollection: Boolean = false,

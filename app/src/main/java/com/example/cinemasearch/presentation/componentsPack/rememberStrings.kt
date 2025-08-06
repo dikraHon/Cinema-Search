@@ -39,6 +39,8 @@ fun rememberStrings(): Strings {
         settings = stringResource(R.string.settings),
         menu = stringResource(R.string.menu),
         searchMovie = stringResource(R.string.search_movie),
-        error = stringResource(R.string.free_token_expired)
+        error = stringResource(R.string.free_token_expired),
+        countries = stringResource(R.string.countries),
+        genres = stringResource(R.string.genres)
     )
 }
