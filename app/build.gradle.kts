@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -26,6 +27,7 @@ android {
                 "proguard-rules.pro"
             )
         }
+
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -56,4 +58,39 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    //ksp + dagger2
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.dagger)
+    ksp(libs.dagger.compiler)
+
+    // Retrofit и Moshi
+    implementation (libs.retrofit)
+    implementation (libs.converter.moshi)
+    implementation (libs.moshi.kotlin)
+    ksp (libs.moshi.kotlin.codegen)
+
+    // Coroutines
+    implementation (libs.kotlinx.coroutines.android)
+
+    //room
+    implementation("androidx.room:room-runtime:2.7.0")
+    implementation("androidx.room:room-ktx:2.7.0")
+
+    implementation("io.coil-kt:coil-compose:2.7.0")
+    implementation("io.coil-kt:coil-svg:2.7.0")
+
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+
+    implementation("androidx.navigation:navigation-compose:2.9.3")
+
+    implementation("com.google.accompanist:accompanist-flowlayout:0.32.0")
+
+    implementation("com.google.android.material:material:1.6.0")
+    implementation("androidx.compose.material:material:1.3.0")
+
+    // WorkManager
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
+    implementation("androidx.concurrent:concurrent-futures-ktx:1.1.0")
+
 }

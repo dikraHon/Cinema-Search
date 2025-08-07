@@ -1,0 +1,119 @@
+@file:Suppress("DEPRECATION")
+
+package com.example.cinemasearch.presentation.detailsScreenPackage
+
+import android.content.Intent
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.cinemasearch.presentation.componentsPack.rememberStrings
+import com.example.cinemasearch.presentation.viewModelPackage.detailsViewModelPack.DetailsViewModel
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DetailsScreen(
+    filmId: Long,
+    detailsViewModel: DetailsViewModel,
+    onBackClick: () -> Unit
+) {
+    val films by detailsViewModel.film.collectAsStateWithLifecycle()
+    val isLoading by detailsViewModel.isLoading.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+    val string = rememberStrings()
+
+    LaunchedEffect(filmId) {
+        detailsViewModel.loadFilmDetails(filmId)
+    }
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        text = films?.name ?: string.notHaveName,
+                        color = Color.White
+                    )
+                },
+                navigationIcon = {
+                    IconButton(onClick = onBackClick) {
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = string.back
+                        )
+                    }
+                },
+                actions = {
+                    films?.let {
+                        IconButton(onClick = {
+                            val shareText =
+                                buildString {
+                                    append("${string.film}: ${it.name ?: string.notHaveName}\n")
+                                    append("${string.rating}: ${"%.1f".format(it.rating)}\n")
+                                    append("${string.year}: ${it.year}\n")
+                                    append("${string.countries}: ${it.countries}\n")
+                                    append("${string.genres}: ${it.genres}\n")
+                                    append(
+                                        "${string.description}: ${
+                                            it.description?.take(300)
+                                                ?: string.notHaveDescription
+                                        }"
+                                    )
+                                }
+                            val intent = Intent(Intent.ACTION_SEND).apply {
+                                type = "text/plain"
+                                putExtra(Intent.EXTRA_TEXT, shareText)
+                            }
+                            ContextCompat.startActivity(
+                                context,
+                                Intent.createChooser(intent, string.shareFilm),
+                                null
+                            )
+                        }) {
+                            Icon(Icons.Default.Share, contentDescription = string.share)
+                        }
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color(0xFFCA5959),
+                    titleContentColor = Color.White,
+                    actionIconContentColor = Color.White
+                )
+            )
+        },
+
+        content = { innerPadding ->
+            if (isLoading) {
+                CircularProgressIndicator(modifier = Modifier.fillMaxSize())
+            } else if (films != null) {
+                FilmDetailsContent(
+                    film = films!!,
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .padding(top = 0.dp)
+                )
+            }
+        }
+    )
+}

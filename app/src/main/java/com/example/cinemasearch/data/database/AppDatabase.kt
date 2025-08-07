@@ -1,0 +1,50 @@
+package com.example.cinemasearch.data.database
+
+import android.content.Context
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.example.cinemasearch.data.database.daoPackage.CollectionsDao
+import com.example.cinemasearch.data.database.daoPackage.FavoritesDao
+import com.example.cinemasearch.data.database.daoPackage.FilmsDao
+import com.example.cinemasearch.domain.modelData.CollectionFilms
+import com.example.cinemasearch.domain.modelData.FilmCollectionCrossRef
+import com.example.cinemasearch.domain.modelData.Films
+
+@Database(
+    entities = [
+        Films::class,
+        CollectionFilms::class,
+        FilmCollectionCrossRef::class
+               ],
+    version = 11,
+    exportSchema = false
+)
+@TypeConverters(Converters::class)
+abstract class AppDatabase : RoomDatabase() {
+
+    abstract fun filmsDao(): FilmsDao
+    abstract fun collectionsDao(): CollectionsDao
+
+    abstract fun favoritesDao(): FavoritesDao
+
+    companion object {
+        @Volatile
+        private var Instance: AppDatabase? = null
+
+        fun getDatabase(context: Context): AppDatabase {
+            return Instance ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    AppDatabase::class.java,
+                    "films_database"
+                )
+                    .fallbackToDestructiveMigration(false)
+                    .build()
+                Instance = instance
+                instance
+            }
+        }
+    }
+}
