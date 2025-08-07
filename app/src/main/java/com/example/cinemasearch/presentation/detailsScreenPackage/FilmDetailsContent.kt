@@ -15,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -58,26 +59,26 @@ fun FilmDetailsContent(film: Films, modifier: Modifier = Modifier) {
                 text = film.name ?: string.notHaveName,
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier.padding(bottom = 4.dp),
-                color = MaterialTheme.colorScheme.onSurface
+                color = Color.White
             )
 
             Text(
                 text = "${string.rating}: ${"%.1f".format(film.rating)}",
                 style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurface
+                color = Color.White
             )
 
             Text(
                 text = "${string.year}: ${film.year}",
                 style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurface
+                color = Color.White
             )
 
             film.countries?.takeIf { it.isNotBlank() }?.let { countries ->
                 Text(
                     text = "${string.countries}: $countries",
                     style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
+                    color = Color.White,
                     modifier = Modifier.padding(bottom = 4.dp)
                 )
             }
@@ -86,7 +87,7 @@ fun FilmDetailsContent(film: Films, modifier: Modifier = Modifier) {
                 Text(
                     text = "${string.genres}: ${genres.joinToString(", ")}",
                     style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
+                    color = Color.White,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
             }
@@ -96,7 +97,7 @@ fun FilmDetailsContent(film: Films, modifier: Modifier = Modifier) {
             Text(
                 text = film.description ?: string.notHaveDescription,
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface
+                color = Color.White
             )
             Spacer(modifier = Modifier.height(32.dp))
         }

@@ -20,6 +20,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -107,10 +108,10 @@ fun FilmCard(
                     modifier = Modifier.padding(bottom = 4.dp)
                 ) {
                     Icon(
-                        painter = painterResource(R.drawable.ic_menu),
+                        imageVector = Icons.Default.Star,
                         contentDescription = strings.rating,
-                        tint = Color(0xFFFFC107),
-                        modifier = Modifier.size(16.dp)
+                        modifier = Modifier.size(16.dp),
+                        tint =  Color.Red
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(

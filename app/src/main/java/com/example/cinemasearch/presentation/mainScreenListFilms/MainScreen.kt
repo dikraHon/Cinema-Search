@@ -63,29 +63,20 @@ fun MainScreen(
 
     // 2.Search Status
     var searchQuery by remember { mutableStateOf("") }
-    val debouncedSearchQuery = remember { mutableStateOf("") }
 
-    // 3.
     //Loading Data
     val state = viewModel.state.collectAsStateWithLifecycle().value
     val strings = rememberStrings()
 
-    // 4. Effects
-    // Search debounce (1 sec delay)
     LaunchedEffect(searchQuery) {
-        delay(1000)
-        debouncedSearchQuery.value = searchQuery
-    }
-
-    //Processing a search query
-    LaunchedEffect(debouncedSearchQuery.value) {
-        if (debouncedSearchQuery.value.length > 2) {
-            viewModel.searchFilms(debouncedSearchQuery.value)
-        } else if (debouncedSearchQuery.value.isEmpty()) {
+        delay(500)
+        if (searchQuery.length > 2) {
+            viewModel.searchFilms(searchQuery)
+        } else if (searchQuery.isEmpty()) {
             viewModel.loadFilms()
         }
     }
-    //Showing errors
+
     LaunchedEffect(state.error) {
         state.error?.let { error ->
             scope.launch {
@@ -98,12 +89,10 @@ fun MainScreen(
         }
     }
 
-    // 5. Loading movies on startup
     LaunchedEffect(Unit) {
         viewModel.loadFilms()
     }
 
-    // 6. UI
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {

@@ -1,10 +1,10 @@
 package com.example.cinemasearch.presentation.viewModelPackage.favoritesScreenViewModel
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cinemasearch.domain.modelData.Films
 import com.example.cinemasearch.domain.repositoryPackage.FavoriteRepository
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -12,7 +12,7 @@ class FavoritesViewModel @Inject constructor(
     private val favoriteRepository: FavoriteRepository
 ): ViewModel() {
 
-    private val _favoriteFilms = mutableStateOf<List<Films>>(emptyList())
+    private val _favoriteFilms = MutableStateFlow<List<Films>>(emptyList())
     val favoriteFilms: List<Films> get() = _favoriteFilms.value
 
     init {
